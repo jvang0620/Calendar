@@ -1,0 +1,66 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  background-color: #f0f8ff; 
+  color: #333; /* Dark text color */
+}
+
+h2 {
+  color: #4169e1; /* Royal blue header color */
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  background-color: #ffffff; /* White background for the calendar */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  border: 1px solid #b0c4de; /* Light steel blue border color */
+  padding: 8px;
+  text-align: center;
+}
+
+th {
+  background-color: #87ceeb; /* Sky blue header background color */
+}
+
+#calendar-container {
+  margin-bottom: 20px;
+}
+
+#nav-buttons {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #4169e1; /* Royal blue button color */
+  color: #fff; /* White text color */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+h3 {
+  display: inline-block;
+  color: #4169e1; /* Royal blue text color */
+}
+
+.holiday {
+  background-color: #ffcccb; /* Light coral background for holidays */
+}
+
+.holiday-tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  display: none;
+  z-index: 1;
+}
