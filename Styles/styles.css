@@ -64,3 +64,7 @@ h3 {
   display: none;
   z-index: 1;
 }
+
+.current-day {
+  background-color: #ADD8E6; /* Light blue background for the current day */
+}

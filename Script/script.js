@@ -22,6 +22,10 @@ function generateCalendar(year, month) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = new Date(year, month, 1).getDay();
 
+  // Get the current date
+  const currentDate = new Date(); 
+  const currentDay = currentDate.getDate();
+
   const calendarContainer = document.getElementById('calendar-container');
   calendarContainer.innerHTML = `<h3>${new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>`;
 
@@ -52,17 +56,27 @@ function generateCalendar(year, month) {
       if (i === 0 && j < firstDayOfMonth) {
         // Empty cells before the first day of the month
         cell.textContent = '';
-      } else if (dayCounter <= daysInMonth) {
+      } 
+      else if (dayCounter <= daysInMonth) {
         cell.textContent = dayCounter;
+
         if (holidays[month] && holidays[month][dayCounter]) {
           cell.classList.add('holiday');
           cell.setAttribute('data-holiday', holidays[month][dayCounter]);
           cell.addEventListener('mouseover', showHolidayTooltip);
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
+        if (year === currentDate.getFullYear() && month === currentDate.getMonth() && dayCounter === currentDay) {
+          // Highlight the current day
+          cell.classList.add('current-day');
+          cell.addEventListener('mouseover', showCurrentDayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
         dayCounter++;
       }
+
       row.appendChild(cell);
+
     }
 
     tbody.appendChild(row);
@@ -102,6 +116,14 @@ function showHolidayTooltip(event) {
 function hideHolidayTooltip() {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.style.display = 'none';
+}
+
+function showCurrentDayTooltip() {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = 'Current Date';
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
 }
 
 // Initial calendar display
