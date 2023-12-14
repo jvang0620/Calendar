@@ -3,19 +3,20 @@ let currentMonth = 0; // January
 
 // Sample holidays (customize as needed)
 const holidays = {
-  0: { 1: "New Year's Day" },
-  1: { 21: "Martin Luther King Jr. Day" },
-  3: { 14: "Valentine's Day" },
-  3: { 29: "Good Friday" },
-  3: { 31: "Easter Sunday" },
-  4: { 1: "Easter Monday" },
-  4: { 12: "International Workers' Day" },
-  6: { 4: "Independence Day" },
-  7: { 28: "Labor Day" },
-  9: { 14: "Columbus Day" },
-  10: { 11: "Veterans Day" },
-  10: { 22: "Thanksgiving Day" },
+  0: { 1: "New Year's Day" }, //January
+  0: { 15: "Martin Luther King Jr. Day" },
+  1: { 14: "Valentine's Day" }, //Febuary
+  2: { 29: "Good Friday" }, //March
+  2: { 31: "Easter Sunday" },
+  4: { 27: "Memorial Day" }, //May
+  6: { 4: "Independence Day" }, //July
+  7: { 2: "Labor Day" }, //Auguest
+  9: { 14: "Columbus Day" }, //October
+  10: { 11: "Veterans Day" }, //November
+  10: { 28: "Thanksgiving Day" },
+  11: { 24: "Christmas Eve"}, //December
   11: { 25: "Christmas Day" },
+  11: { 31: "New Year's Eve "},
 };
 
 function generateCalendar(year, month) {
