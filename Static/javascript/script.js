@@ -3,20 +3,38 @@ let currentMonth = 0; // January
 
 // Sample holidays (customize as needed)
 const holidays = {
-  0: { 1: "New Year's Day" }, //January
-  0: { 15: "Martin Luther King Jr. Day" },
-  1: { 14: "Valentine's Day" }, //Febuary
-  2: { 29: "Good Friday" }, //March
-  2: { 31: "Easter Sunday" },
-  4: { 27: "Memorial Day" }, //May
-  6: { 4: "Independence Day" }, //July
-  7: { 2: "Labor Day" }, //Auguest
-  9: { 14: "Columbus Day" }, //October
-  10: { 11: "Veterans Day" }, //November
-  10: { 28: "Thanksgiving Day" },
-  11: { 24: "Christmas Eve"}, //December
-  11: { 25: "Christmas Day" },
-  11: { 31: "New Year's Eve "},
+  0: [ //January
+      { 1: "New Year's Day" }, 
+      { 15: "Martin Luther King Jr. Day" },
+  ],
+  1: [ //Febuary
+      { 14: "Valentine's Day" },
+  ], 
+  2: [ //March
+      { 29: "Good Friday" }, 
+      { 31: "Easter Sunday" },
+  ],
+  4: [ //May
+      { 27: "Memorial Day" },
+  ], 
+  6: [ //July
+      { 4: "Independence Day" }, 
+  ],
+  7: [ //Auguest
+      { 2: "Labor Day" }, 
+  ],
+  9: [ //October
+      { 14: "Columbus Day" },
+  ], 
+  10: [ //November
+        { 11: "Veterans Day" }, 
+        { 28: "Thanksgiving Day" },
+  ],
+  11: [ //December
+        { 24: "Christmas Eve"}, 
+        { 25: "Christmas Day" },
+        { 31: "New Year's Eve "},
+  ],
 };
 
 function generateCalendar(year, month) {
@@ -51,7 +69,7 @@ function generateCalendar(year, month) {
   let dayCounter = 1;
   for (let i = 0; i < 6; i++) {
     const row = document.createElement('tr');
-
+  
     for (let j = 0; j < 7; j++) {
       const cell = document.createElement('td');
       if (i === 0 && j < firstDayOfMonth) {
@@ -60,13 +78,21 @@ function generateCalendar(year, month) {
       } 
       else if (dayCounter <= daysInMonth) {
         cell.textContent = dayCounter;
+        const monthHolidays = holidays[month];
 
-        if (holidays[month] && holidays[month][dayCounter]) {
-          cell.classList.add('holiday');
-          cell.setAttribute('data-holiday', holidays[month][dayCounter]);
-          cell.addEventListener('mouseover', showHolidayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
+        if (monthHolidays) {
+          monthHolidays.forEach(holiday => {
+            const [day, holidayName] = Object.entries(holiday)[0];
+
+            if (parseInt(day) === dayCounter) {
+              cell.classList.add('holiday');
+              cell.setAttribute('data-holiday', holidayName);
+              cell.addEventListener('mouseover', showHolidayTooltip);
+              cell.addEventListener('mouseout', hideHolidayTooltip);
+            }
+          });
         }
+        
         if (year === currentDate.getFullYear() && month === currentDate.getMonth() && dayCounter === currentDay) {
           // Highlight the current day
           cell.classList.add('current-day');
@@ -75,11 +101,9 @@ function generateCalendar(year, month) {
         }
         dayCounter++;
       }
-
       row.appendChild(cell);
-
     }
-
+  
     tbody.appendChild(row);
   }
 
