@@ -38,17 +38,53 @@ const holidays = {
 };
 
 function generateCalendar(year, month) {
+  const calendarContainer = document.getElementById('calendar-container');
+  calendarContainer.innerHTML = ''; // Clear the container
+
+  // Create the current month calendar
+  const currentMonthContainer = createCalendarContainer(year, month, 'current-month');
+  currentMonthContainer.appendChild(createCalendarTable(year, month));
+  calendarContainer.appendChild(currentMonthContainer);
+
+  // Create the previous month calendar
+  const previousMonthContainer = createCalendarContainer(year, month - 1);
+  previousMonthContainer.appendChild(createCalendarTable(year, (month - 1 + 12) % 12, 'prev-month'));
+  calendarContainer.appendChild(previousMonthContainer);
+
+  // Create the next month calendar
+  const nextMonthContainer = createCalendarContainer(year, month + 1);
+  nextMonthContainer.appendChild(createCalendarTable(year, (month + 1) % 12, 'next-month'));
+  calendarContainer.appendChild(nextMonthContainer);
+}
+
+function createCalendarContainer(year, month, calendarType) {
+  const container = document.createElement('div');
+  container.classList.add('calendar-container');
+  
+  if (calendarType) {
+    container.classList.add(calendarType);
+  }
+
+  //if not current-month
+  if (calendarType !== "current-month") {
+    //keep h3 at standard font-size
+    container.innerHTML = `<h3>${new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>`;
+  } else {
+    //make h3 font-size xx-large
+    container.innerHTML = `<h3 id="calendarContainerH3">${new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>`;
+  }
+
+  return container;
+}
+
+function createCalendarTable(year, month, calendarType) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = new Date(year, month, 1).getDay();
-
-  // Get the current date
   const currentDate = new Date(); 
   const currentDay = currentDate.getDate();
 
-  const calendarContainer = document.getElementById('calendar-container');
-  calendarContainer.innerHTML = `<h3 id="calendarContainerH3">${new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>`;
-
   const table = document.createElement('table');
+  table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
   const thead = document.createElement('thead');
   const tbody = document.createElement('tbody');
 
@@ -108,7 +144,7 @@ function generateCalendar(year, month) {
   }
 
   table.appendChild(tbody);
-  calendarContainer.appendChild(table);
+  return table;
 }
 
 function showPreviousMonth() {

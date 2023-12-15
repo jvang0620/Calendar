@@ -17,6 +17,21 @@ table {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+table.current-month {
+  border-collapse: collapse;
+  width: 70%;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table.prev-month,
+table.next-month {
+  border-collapse: collapse;
+  width: 15%;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 th, td {
   border: 1px solid #b0c4de; /* Light steel blue border color */
   padding: 8px;
@@ -29,6 +44,24 @@ th {
 
 #calendar-container {
   margin-bottom: 20px;
+  
+}
+
+.calendar-container {
+  display: inline-block;
+  margin-right: 35px; 
+  vertical-align: top; 
+}
+
+.current-month {
+  width: 80%; 
+}
+
+@media only screen and (max-width: 768px) {
+  .calendar-container {
+    width: 100%; /* Full width on smaller screens */
+    margin-right: 0; /* No margin on smaller screens */
+  }
 }
 
 #calendarContainerH3 {

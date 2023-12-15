@@ -26,6 +26,6 @@ Add extension "Live Server" if you havn't:
 
 Next, right-click anywhere in the HTML file and select "Open with Live Server", and the app will display on your local machine.
 
-You're all set as.
+You're all set.
 
-Have fun!!!:)
+Happy coding!!!:)
