@@ -6,7 +6,8 @@ body {
 }
 
 h2 {
-  color: #4169e1; /* Royal blue header color */
+  color: black; 
+  font-size: xx-large;
 }
 
 table {
