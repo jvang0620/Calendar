@@ -46,7 +46,7 @@ function generateCalendar(year, month) {
   const currentDay = currentDate.getDate();
 
   const calendarContainer = document.getElementById('calendar-container');
-  calendarContainer.innerHTML = `<h3>${new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>`;
+  calendarContainer.innerHTML = `<h3 id="calendarContainerH3">${new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>`;
 
   const table = document.createElement('table');
   const thead = document.createElement('thead');
@@ -92,7 +92,7 @@ function generateCalendar(year, month) {
             }
           });
         }
-        
+
         if (year === currentDate.getFullYear() && month === currentDate.getMonth() && dayCounter === currentDay) {
           // Highlight the current day
           cell.classList.add('current-day');
