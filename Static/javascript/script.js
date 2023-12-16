@@ -179,7 +179,7 @@ function hideHolidayTooltip() {
   tooltip.style.display = 'none';
 }
 
-function showCurrentDayTooltip() {
+function showCurrentDayTooltip(event) {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.innerHTML = 'Current Date';
   tooltip.style.display = 'block';
