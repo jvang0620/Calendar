@@ -90,7 +90,17 @@ h3 {
 }
 
 .holiday {
-  background-color: #ffcccb; /* Light coral background for holidays */
+  position: relative;
+}
+
+.holiday::before {
+  content: '\2022'; /* Unicode character for a bullet point */
+  font-size: 1.5em;
+  color: black;
+  position: absolute;
+  top: 85%; /* Adjusted to position the dot underneath the number */
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .holiday-tooltip {
