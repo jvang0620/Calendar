@@ -114,5 +114,6 @@ h3 {
 }
 
 .current-day {
-  background-color: #ADD8E6; /* Light blue background for the current day */
+  font-weight: bold;
+  color: red; /*font color*/
 }
