@@ -1,7 +1,10 @@
-let currentYear = 2024;
+let currentYear = 2024; //Current year
 let currentMonth = 0; // January
 
-// Sample holidays (customize as needed)
+
+/**********************
+  Sample holidays/dates
+**********************/
 const holidays = {
   0: [ //January
       { 1: "New Year's Day" }, 
@@ -37,6 +40,10 @@ const holidays = {
   ],
 };
 
+
+/*******************
+  Generate calendars
+*******************/
 function generateCalendar(year, month) {
   const calendarContainer = document.getElementById('calendar-container');
   calendarContainer.innerHTML = ''; // Clear the container
@@ -57,6 +64,10 @@ function generateCalendar(year, month) {
   calendarContainer.appendChild(nextMonthContainer);
 }
 
+
+/******************************
+  Create the calendar container
+******************************/
 function createCalendarContainer(year, month, calendarType) {
   const container = document.createElement('div');
   container.classList.add('calendar-container');
@@ -77,6 +88,10 @@ function createCalendarContainer(year, month, calendarType) {
   return container;
 }
 
+
+/**************************
+  Create the calendar table
+**************************/
 function createCalendarTable(year, month, calendarType) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = new Date(year, month, 1).getDay();
@@ -147,6 +162,10 @@ function createCalendarTable(year, month, calendarType) {
   return table;
 }
 
+
+/************************
+** Display previous month
+************************/
 function showPreviousMonth() {
   currentMonth--;
   if (currentMonth < 0) {
@@ -156,6 +175,10 @@ function showPreviousMonth() {
   generateCalendar(currentYear, currentMonth);
 }
 
+
+/********************
+** Display next month
+********************/
 function showNextMonth() {
   currentMonth++;
   if (currentMonth > 11) {
@@ -165,6 +188,10 @@ function showNextMonth() {
   generateCalendar(currentYear, currentMonth);
 }
 
+
+/*****************
+** Display holiday
+*****************/
 function showHolidayTooltip(event) {
   const holidayName = event.target.getAttribute('data-holiday');
   const tooltip = document.getElementById('holiday-tooltip');
@@ -174,11 +201,19 @@ function showHolidayTooltip(event) {
   tooltip.style.top = `${event.pageY - 20}px`;
 }
 
+
+/**************
+** Hide holiday
+***************/
 function hideHolidayTooltip() {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.style.display = 'none';
 }
 
+
+/*********************
+** Display current day
+*********************/
 function showCurrentDayTooltip(event) {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.innerHTML = 'Current Date';
@@ -187,5 +222,8 @@ function showCurrentDayTooltip(event) {
   tooltip.style.top = `${event.pageY - 20}px`;
 }
 
-// Initial calendar display
+
+/**************************
+** Initial calendar display
+**************************/
 generateCalendar(currentYear, currentMonth);
