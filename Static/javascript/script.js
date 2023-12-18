@@ -24,6 +24,7 @@ const holidays = {
   ],
   9: [ //October
       { 14: "Columbus Day" }, //changes every year 
+      { 31: "Hallowen"},
   ], 
   10: [ //November
         { 11: "Veterans Day" }, 
