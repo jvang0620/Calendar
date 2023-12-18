@@ -8,26 +8,26 @@ let currentMonth = 0; // January
 const holidays = {
   0: [ //January
       { 1: "New Year's Day" }, 
-      { 15: "Martin Luther King Jr. Day" },
+      { 15: "Martin Luther King Jr. Day" }, //changes every year
   ],
   1: [ //Febuary
       { 14: "Valentine's Day" },
   ], 
   4: [ //May
-      { 27: "Memorial Day" },
+      { 27: "Memorial Day" }, //changes every year (last monday of May)
   ], 
   6: [ //July
       { 4: "Independence Day" }, 
   ],
-  7: [ //Auguest
-      { 2: "Labor Day" }, 
+  8: [ //September
+      { 2: "Labor Day" }, //changes every year (1st monday of september)
   ],
   9: [ //October
-      { 14: "Columbus Day" },
+      { 14: "Columbus Day" }, //changes every year 
   ], 
   10: [ //November
         { 11: "Veterans Day" }, 
-        { 28: "Thanksgiving Day" },
+        { 28: "Thanksgiving Day" }, //changes every year 
   ],
   11: [ //December
         { 24: "Christmas Eve"}, 
