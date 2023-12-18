@@ -13,10 +13,6 @@ const holidays = {
   1: [ //Febuary
       { 14: "Valentine's Day" },
   ], 
-  2: [ //March
-      { 29: "Good Friday" }, 
-      { 31: "Easter Sunday" },
-  ],
   4: [ //May
       { 27: "Memorial Day" },
   ], 
@@ -97,6 +93,8 @@ function createCalendarTable(year, month, calendarType) {
   const firstDayOfMonth = new Date(year, month, 1).getDay();
   const currentDate = new Date(); 
   const currentDay = currentDate.getDate();
+  const easterDate = getEasterDate(year);
+  const goodFridayDate = getGoodFridayDate(year);
 
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
@@ -129,6 +127,35 @@ function createCalendarTable(year, month, calendarType) {
       } 
       else if (dayCounter <= daysInMonth) {
         cell.textContent = dayCounter;
+
+        // Check if the current day is Easter
+        if (
+          year === easterDate.getFullYear() &&
+          month === easterDate.getMonth() &&
+          (dayCounter === easterDate.getDate() || dayCounter === easterDate.getDate() - 2)
+        ) {
+          //Add css style class 'easter-day' to cell
+          cell.classList.add('easter-day');
+
+          //when mouse is over cell, display Easter. If not, hide
+          cell.addEventListener('mouseover', showEasterTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+        
+        // Check if the current day is Good Friday
+        if (
+          year === goodFridayDate.getFullYear() &&
+          month === goodFridayDate.getMonth() &&
+          dayCounter === goodFridayDate.getDate()
+        ) {
+          //Add css style class 'good-friday' to cell
+          cell.classList.add('good-friday');
+
+          //when mouse is over cell, display good friday. If not, hide
+          cell.addEventListener('mouseover', showGoodFridayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
         const monthHolidays = holidays[month];
 
         if (monthHolidays) {
@@ -160,6 +187,76 @@ function createCalendarTable(year, month, calendarType) {
 
   table.appendChild(tbody);
   return table;
+}
+
+
+/*****************************
+** Function to get Easter Date
+*****************************/
+function getEasterDate(year) {
+  // Algorithm to calculate Easter date
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31) - 1;
+  const day = ((h + l - 7 * m + 114) % 31) + 1;
+
+  return new Date(year, month, day);
+}
+
+/*****************************
+** Function to get Good Friday
+*****************************/
+function getGoodFridayDate(year) {
+  // Algorithm to calculate Good Friday date
+  const a = year % 19;
+  const b = Math.floor(year / 100);
+  const c = year % 100;
+  const d = Math.floor(b / 4);
+  const e = b % 4;
+  const f = Math.floor((b + 8) / 25);
+  const g = Math.floor((b - f + 1) / 3);
+  const h = (19 * a + b - d - g + 15) % 30;
+  const i = Math.floor(c / 4);
+  const k = c % 4;
+  const l = (32 + 2 * e + 2 * i - h - k) % 7;
+  const m = Math.floor((a + 11 * h + 22 * l) / 451);
+  const month = Math.floor((h + l - 7 * m + 114) / 31) - 1;
+  const day = ((h + l - 7 * m + 114) % 31) + 1 - 2; // Good Friday is two days before Easter
+
+  return new Date(year, month, day);
+}
+
+/*************************
+  Show Easter Date tooltip
+*************************/
+function showEasterTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = 'Easter';
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/*****************************
+** Display Good Friday tooltip
+*****************************/
+function showGoodFridayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = 'Good Friday';
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
 }
 
 

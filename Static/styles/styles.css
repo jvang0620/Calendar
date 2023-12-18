@@ -118,12 +118,39 @@ h3 {
   color: red; /*font color*/
 }
 
-/* Add this style to your existing CSS */
+/****************
+** CSS for Easter 
+****************/
+.easter-day {
+  /* Set the position to relative for proper positioning of ::before */
+  position: relative; 
+}
 
-.easter-month {
-  width: 80%;
-  margin: 0 auto;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+.easter-day::before {
+  content: '\2022'; /* Unicode character for a bullet point */
+  font-size: 1.5em;
+  color: black;
+  position: absolute;
+  top: 85%; /* Adjusted to position the dot underneath the number */
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+/*********************
+** CSS for Good Friday 
+*********************/
+.good-friday {
+  /* Set the position to relative for proper positioning of ::before */
+  position: relative; 
+}
+
+.good-friday::before {
+  content: '\2022'; /* Unicode character for a bullet point */
+  font-size: 1.5em;
+  color: black;
+  position: absolute;
+  top: 85%; /* Adjusted to position the dot underneath the number */
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
