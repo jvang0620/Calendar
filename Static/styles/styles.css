@@ -154,3 +154,18 @@ h3 {
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.martinLutherKingJr-day {
+  /* Set the position to relative for proper positioning of ::before */
+  position: relative; 
+}
+
+.martinLutherKingJr-day::before {
+  content: '\2022'; /* Unicode character for a bullet point */
+  font-size: 1.5em;
+  color: black;
+  position: absolute;
+  top: 85%; /* Adjusted to position the dot underneath the number */
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
