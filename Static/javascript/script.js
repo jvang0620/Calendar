@@ -272,9 +272,12 @@ function createCalendarTable(year, month, calendarType) {
 *******************************/
 function getDayLightSavingStartDay(year) {
   const marchFirst = new Date(year, 2, 1);
-  const dayOfWeek = marchFirst.getDay();
+  const dayOfWeek = marchFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
   
   // Array to map days to add based on the day of the week
+  // Elements in array are based of calcuating the first of march to the second Sunday of march
+  // Ex: if first of March is Sunday (0), then add 7 days to get to second sunday
+  // Ex: if first of March is Thursday (5), then add 10 days to get to second sunday
   const daysToAddMap = [7, 13, 12, 11, 10, 9, 8];
   
   // Calculate days to add
