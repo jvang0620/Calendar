@@ -148,69 +148,13 @@ function createCalendarTable(year, month, calendarType) {
       else if (dayCounter <= daysInMonth) {
         cell.textContent = dayCounter;
 
-        /*********************************** 
-          Check if the current day is Easter
-        ***********************************/
-        if (
-          year === easterDate.getFullYear() &&
-          month === easterDate.getMonth() &&
-          (dayCounter === easterDate.getDate() || dayCounter === easterDate.getDate() - 2)
-        ) {
-          //Add css style class 'easter-day' to cell
-          cell.classList.add('easter-day');
-
-          //when mouse is over cell, display Easter. If not, hide
-          cell.addEventListener('mouseover', showEasterTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-        
-        /****************************************
-        * Check if the current day is Good Friday
-        ****************************************/
-        if (
-          year === goodFridayDate.getFullYear() &&
-          month === goodFridayDate.getMonth() &&
-          dayCounter === goodFridayDate.getDate()
-        ) {
-          //Add css style class 'good-friday' to cell
-          cell.classList.add('good-friday');
-
-          //when mouse is over cell, display good friday. If not, hide
-          cell.addEventListener('mouseover', showGoodFridayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /*******************************************************
-        * Check if the current day is Martin Luther King Jr. Day
-        *******************************************************/
-        if (
-          year === mlkJrDay.getFullYear() &&
-          month === mlkJrDay.getMonth() &&
-          dayCounter === mlkJrDay.getDate()
-        ) {
-          // Add css style class 'mlk-jr-day' to cell
-          cell.classList.add('martinLutherKingJr-day');
-
-          // when mouse is over cell, display Martin Luther King Jr. Day. If not, hide
-          cell.addEventListener('mouseover', showMlkJrDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /******************************************
-        * Check if the current day is President Day
-        ******************************************/
-        if (
-          year === presidentDay.getFullYear() &&
-          month === presidentDay.getMonth() &&
-          dayCounter === presidentDay.getDate()
-        ) {
-          // Add css style class 'presidentDay' to cell
-          cell.classList.add('presidentDay');
-
-          // when mouse is over cell, display President Day. If not, hide
-          cell.addEventListener('mouseover', showPresidentDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
+        /******************** 
+        ** Check for holidays
+        *********************/
+        checkHoliday(cell, year, month, dayCounter, easterDate, 'easter-day', showEasterTooltip);
+        checkHoliday(cell, year, month, dayCounter, goodFridayDate, 'good-friday', showGoodFridayTooltip);
+        checkHoliday(cell, year, month, dayCounter, mlkJrDay, 'martinLutherKingJr-day', showMlkJrDayTooltip);
+        checkHoliday(cell, year, month, dayCounter, presidentDay, 'presidentDay', showPresidentDayTooltip);
 
         const monthHolidays = holidays[month];
 
@@ -243,6 +187,25 @@ function createCalendarTable(year, month, calendarType) {
 
   table.appendChild(tbody);
   return table;
+}
+
+
+/*************************************** 
+** Check if the current day is a holiday
+***************************************/
+function checkHoliday(cell, year, month, dayCounter, holidayDate, cssClass, showTooltipFunction) {
+  if (
+    year === holidayDate.getFullYear() &&
+    month === holidayDate.getMonth() &&
+    dayCounter === holidayDate.getDate()
+  ) {
+    // Add css style class to cell
+    cell.classList.add(cssClass);
+
+    // When the mouse is over the cell, display the holiday tooltip. If not, hide
+    cell.addEventListener('mouseover', showTooltipFunction);
+    cell.addEventListener('mouseout', hideHolidayTooltip);
+  }
 }
 
 
@@ -331,12 +294,13 @@ function getMartinLutherKingJrDay(year) {
   return mlkJrDay;
 }
 
-/*****************************
-** Function to get Easter Date
+
+/**************************************************************
+** Function to calculate holiday date for Good Friday & Easter
 ** Code from (https://codepal.ai/code-generator/query/LcMQXxxD/calculate-easter-date-javascript)
-*****************************/
-function getEasterDate(year) {
-  // Algorithm to calculate Easter date
+**************************************************************/
+function calculateHolidayDate(year, offset) {
+  // Algorithm to calculate holiday date
   const a = year % 19;
   const b = Math.floor(year / 100);
   const c = year % 100;
@@ -350,33 +314,37 @@ function getEasterDate(year) {
   const l = (32 + 2 * e + 2 * i - h - k) % 7;
   const m = Math.floor((a + 11 * h + 22 * l) / 451);
   const month = Math.floor((h + l - 7 * m + 114) / 31) - 1;
-  const day = ((h + l - 7 * m + 114) % 31) + 1;
+  const day = ((h + l - 7 * m + 114) % 31) + 1 - offset;
 
   return new Date(year, month, day);
 }
 
+
+/*****************************
+** Function to get Easter Date
+*****************************/
+function getEasterDate(year) {
+  return calculateHolidayDate(year, 0);
+}
+
+
 /*****************************
 ** Function to get Good Friday
-** Code from (https://codepal.ai/code-generator/query/LcMQXxxD/calculate-easter-date-javascript)
 *****************************/
 function getGoodFridayDate(year) {
-  // Algorithm to calculate Good Friday date
-  const a = year % 19;
-  const b = Math.floor(year / 100);
-  const c = year % 100;
-  const d = Math.floor(b / 4);
-  const e = b % 4;
-  const f = Math.floor((b + 8) / 25);
-  const g = Math.floor((b - f + 1) / 3);
-  const h = (19 * a + b - d - g + 15) % 30;
-  const i = Math.floor(c / 4);
-  const k = c % 4;
-  const l = (32 + 2 * e + 2 * i - h - k) % 7;
-  const m = Math.floor((a + 11 * h + 22 * l) / 451);
-  const month = Math.floor((h + l - 7 * m + 114) / 31) - 1;
-  const day = ((h + l - 7 * m + 114) % 31) + 1 - 2; // Good Friday is two days before Easter
+  return calculateHolidayDate(year, 2); // Good Friday is two days before Easter
+}
 
-  return new Date(year, month, day);
+
+/******************
+** Display holidays
+*******************/
+function showHolidayTooltip(event, holidayName) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = holidayName;
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
 }
 
 
@@ -384,11 +352,7 @@ function getGoodFridayDate(year) {
   Show President Day
 ********************/
 function showPresidentDayTooltip(event) {
-  const tooltip = document.getElementById('holiday-tooltip');
-  tooltip.innerHTML = 'President Day';
-  tooltip.style.display = 'block';
-  tooltip.style.left = `${event.pageX + 10}px`;
-  tooltip.style.top = `${event.pageY - 20}px`;
+  showHolidayTooltip(event, 'President Day');
 }
 
 
@@ -396,11 +360,7 @@ function showPresidentDayTooltip(event) {
   Show Martin Luther King Jr
 ****************************/
 function showMlkJrDayTooltip(event) {
-  const tooltip = document.getElementById('holiday-tooltip');
-  tooltip.innerHTML = 'Martin Luther King Jr. Day';
-  tooltip.style.display = 'block';
-  tooltip.style.left = `${event.pageX + 10}px`;
-  tooltip.style.top = `${event.pageY - 20}px`;
+  showHolidayTooltip(event, 'Martin Luther King Jr. Day');
 }
 
 
@@ -408,11 +368,7 @@ function showMlkJrDayTooltip(event) {
   Show Easter Date tooltip
 *************************/
 function showEasterTooltip(event) {
-  const tooltip = document.getElementById('holiday-tooltip');
-  tooltip.innerHTML = 'Easter';
-  tooltip.style.display = 'block';
-  tooltip.style.left = `${event.pageX + 10}px`;
-  tooltip.style.top = `${event.pageY - 20}px`;
+  showHolidayTooltip(event, 'Easter');
 }
 
 
@@ -420,11 +376,7 @@ function showEasterTooltip(event) {
 ** Display Good Friday tooltip
 *****************************/
 function showGoodFridayTooltip(event) {
-  const tooltip = document.getElementById('holiday-tooltip');
-  tooltip.innerHTML = 'Good Friday';
-  tooltip.style.display = 'block';
-  tooltip.style.left = `${event.pageX + 10}px`;
-  tooltip.style.top = `${event.pageY - 20}px`;
+  showHolidayTooltip(event, 'Good Friday');
 }
 
 
@@ -451,19 +403,6 @@ function showNextMonth() {
     currentYear++;
   }
   generateCalendar(currentYear, currentMonth);
-}
-
-
-/*****************
-** Display holiday
-*****************/
-function showHolidayTooltip(event) {
-  const holidayName = event.target.getAttribute('data-holiday');
-  const tooltip = document.getElementById('holiday-tooltip');
-  tooltip.innerHTML = holidayName;
-  tooltip.style.display = 'block';
-  tooltip.style.left = `${event.pageX + 10}px`;
-  tooltip.style.top = `${event.pageY - 20}px`;
 }
 
 
