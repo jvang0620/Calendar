@@ -116,8 +116,6 @@ function createCalendarTable(year, month, calendarType) {
   const mlkJrDay = getMartinLutherKingJrDay(year);
   const presidentDay = getPresidentDay(year);
 
-  console.log(presidentDay);
-
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
   const thead = document.createElement('thead');
@@ -372,6 +370,19 @@ function getGoodFridayDate(year) {
 }
 
 
+/*****************
+** Display holiday
+*****************/
+function showHolidayTooltip(event) {
+  const holidayName = event.target.getAttribute('data-holiday');
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = holidayName;
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
 /*******************
   Show President Day
 ********************/
@@ -443,19 +454,6 @@ function showNextMonth() {
     currentYear++;
   }
   generateCalendar(currentYear, currentMonth);
-}
-
-
-/*****************
-** Display holiday
-*****************/
-function showHolidayTooltip(event) {
-  const holidayName = event.target.getAttribute('data-holiday');
-  const tooltip = document.getElementById('holiday-tooltip');
-  tooltip.innerHTML = holidayName;
-  tooltip.style.display = 'block';
-  tooltip.style.left = `${event.pageX + 10}px`;
-  tooltip.style.top = `${event.pageY - 20}px`;
 }
 
 
