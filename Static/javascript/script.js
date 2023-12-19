@@ -39,7 +39,6 @@ const holidays = {
       { 31: "Hallowen"},
   ], 
   10: [ //November
-        { 3: "Daylight Saving Time Ends"}, //changes every year (1st Sunday of Nov)
         { 4: "Election Day"}, //changes every year (1st Tuesday of November)
         { 11: "Veterans Day" }, //Vet Day is still 11th but time offchanges when the 11th falls on Saturday/Sunday (If Sat, time off is on Friday (the day before). If Sunday, time off falls on Monday (the day after).
         { 28: "Thanksgiving Day" }, //changes every year 
@@ -115,6 +114,7 @@ function createCalendarTable(year, month, calendarType) {
   const mlkJrDay = getMartinLutherKingJrDay(year);
   const presidentDay = getPresidentDay(year);
   const dayLightSavingStartDay = getDayLightSavingStartDay(year);
+  const dayLightSavingEndDay = getDayLightSavingEndDay(year);
 
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
@@ -228,6 +228,22 @@ function createCalendarTable(year, month, calendarType) {
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
 
+        /*************************************************************
+        * Check if the current day is Day Light Saving Time End Date
+        *************************************************************/
+        if (
+          year === dayLightSavingEndDay.getFullYear() &&
+          month === dayLightSavingEndDay.getMonth() &&
+          dayCounter === dayLightSavingEndDay.getDate()
+        ) {
+          // Add css style class 'dayLightSavingEndDay' to cell
+          cell.classList.add('dayLightSavingEndDay');
+
+          // when mouse is over cell, display 'Day Light Saving End'. If mouse not over, hide
+          cell.addEventListener('mouseover', showDayLightSavingEndsTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
         //retrieves the array of holidays for the current month from the holidays object.
         const monthHolidays = holidays[month];
 
@@ -267,9 +283,31 @@ function createCalendarTable(year, month, calendarType) {
 }
 
 
-/*******************************
-** Function to get President Day
-*******************************/
+/****************************************
+** Function to get DayLightSavingEndDay
+****************************************/
+function getDayLightSavingEndDay(year) {
+  const novemberFirst = new Date(year, 10, 1);
+  const dayOfWeek = novemberFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
+  
+  // Array to map days to add based on the day of the week
+  // Elements in array are based of calcuating the first of November to the second Sunday of November
+  // Ex: if first of November is Sunday (0), then add 0 days to get to first sunday
+  // Ex: if first of November is Thursday (5), then add 3 days to get to first sunday
+  const daysToAddMap = [0, 6, 5, 4, 3, 2, 1];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Day-Light-Saving-End-Day date
+  const dayLightSavingEndDay = new Date(year, 10, 1 + daysToAdd);
+  return dayLightSavingEndDay;
+}
+
+
+/****************************************
+** Function to get DayLightSavingStartDay
+****************************************/
 function getDayLightSavingStartDay(year) {
   const marchFirst = new Date(year, 2, 1);
   const dayOfWeek = marchFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
@@ -434,12 +472,24 @@ function showGoodFridayTooltip(event) {
 }
 
 
-/***********************************
-** Display Day Light Saving in March
-************************************/
+/**********************************************
+** Display Day Light Saving Start Date in March
+**********************************************/
 function showDayLightSavingStartsTooltip(event) {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.innerHTML = 'Day Light Saving Starts';
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/***********************************************
+** Display Day Light Saving End Date in November
+***********************************************/
+function showDayLightSavingEndsTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = 'Day Light Saving Ends';
   tooltip.style.display = 'block';
   tooltip.style.left = `${event.pageX + 10}px`;
   tooltip.style.top = `${event.pageY - 20}px`;
