@@ -8,7 +8,7 @@ let currentMonth = 0; // January
 const holidays = {
   0: [ //January
       { 1: "New Year's Day" }, 
-      { 15: "Martin Luther King Jr. Day" }, //changes every year
+      { 15: "Martin Luther King Jr. Day" }, //changes every year (3rd monday of Jan)
   ],
   1: [ //Febuary
       { 14: "Valentine's Day" },
@@ -193,6 +193,7 @@ function createCalendarTable(year, month, calendarType) {
 
 /*****************************
 ** Function to get Easter Date
+** Code from (https://codepal.ai/code-generator/query/LcMQXxxD/calculate-easter-date-javascript)
 *****************************/
 function getEasterDate(year) {
   // Algorithm to calculate Easter date
@@ -216,6 +217,7 @@ function getEasterDate(year) {
 
 /*****************************
 ** Function to get Good Friday
+** Code from (https://codepal.ai/code-generator/query/LcMQXxxD/calculate-easter-date-javascript)
 *****************************/
 function getGoodFridayDate(year) {
   // Algorithm to calculate Good Friday date
