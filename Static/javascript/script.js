@@ -19,9 +19,6 @@ const holidays = {
     {17: "St. Patrick's Day"},
     {19: "Spring Starts."} //https://www.calendardate.com/spring_2027.htm
   ],
-  4: [ //May
-      { 27: "Memorial Day" }, //changes every year (last monday of May)
-  ], 
   5: [
       { 20: "Summer Starts"}, //changes yearly (https://www.calendardate.com/summer_2027.htm)
   ],
@@ -29,15 +26,12 @@ const holidays = {
       { 4: "Independence Day" }, 
   ],
   8: [ //September
-      { 2: "Labor Day" }, //changes every year (1st monday of september)
       { 22: "Autumn Starts"} //changes yearly (https://www.calendardate.com/autumn_2027.htm)
   ],
   9: [ //October
-      { 14: "Columbus Day" }, //changes every year (2nd monday of october)
       { 31: "Hallowen"},
   ], 
   10: [ //November
-        { 4: "Election Day"}, //changes every year (1st Tuesday of November)
         { 11: "Veterans Day" }, //Vet Day is still 11th but time offchanges when the 11th falls on Saturday/Sunday (If Sat, time off is on Friday (the day before). If Sunday, time off falls on Monday (the day after).
         { 28: "Thanksgiving Day" }, //changes every year 
         { 29: "Black Friday"}, //changes every year
@@ -115,6 +109,9 @@ function createCalendarTable(year, month, calendarType) {
   const dayLightSavingEndDay = getDayLightSavingEndDay(year);
   const mothersDay = getMothersDay(year);
   const fathersDay = getFathersDay(year);
+  const memorialDay = getMemorialDay(year);
+  const laborDay = getLaborDay(year);
+  const columbusDay = getColumbusDay(year);
 
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
@@ -276,6 +273,54 @@ function createCalendarTable(year, month, calendarType) {
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
 
+        /**********************************************
+        * Check if the current day is Memorial Day Date
+        ***********************************************/
+        if (
+          year === memorialDay.getFullYear() &&
+          month === memorialDay.getMonth() &&
+          dayCounter === memorialDay.getDate()
+        ) {
+          // Add css style class 'memorialDay' to cell
+          cell.classList.add('memorialDay');
+
+          // when mouse is over cell, display 'Memorial's Day'. If mouse not over, hide
+          cell.addEventListener('mouseover', showMemorialDayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
+        /**********************************************
+        * Check if the current day is Labor Day Date
+        ***********************************************/
+        if (
+          year === laborDay.getFullYear() &&
+          month === laborDay.getMonth() &&
+          dayCounter === laborDay.getDate()
+        ) {
+          // Add css style class 'laborDay' to cell
+          cell.classList.add('laborDay');
+
+          // when mouse is over cell, display 'Labor Day'. If mouse not over, hide
+          cell.addEventListener('mouseover', showLaborDayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
+        /**********************************************
+        * Check if the current day is Columbus Day
+        ***********************************************/
+        if (
+          year === columbusDay.getFullYear() &&
+          month === columbusDay.getMonth() &&
+          dayCounter === columbusDay.getDate()
+        ) {
+          // Add css style class 'columbusDay' to cell
+          cell.classList.add('columbusDay');
+
+          // when mouse is over cell, display 'Labor Day'. If mouse not over, hide
+          cell.addEventListener('mouseover', showColumbusDayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
         //retrieves the array of holidays for the current month from the holidays object.
         const monthHolidays = holidays[month];
 
@@ -315,6 +360,74 @@ function createCalendarTable(year, month, calendarType) {
 }
 
 
+  // { 14: "Columbus Day" }, //changes every year (2nd monday of october)
+  // { 4: "Election Day"}, //changes every year (1st Tuesday of November)
+
+/***********************************
+** Function to get Columbus Day Date
+************************************/
+function getColumbusDay(year) {
+  const octoberFirst = new Date(year, 9, 1);
+  const dayOfWeek = octoberFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
+  
+  // Elements in array are based off of calcuating the first of October to the second Monday of October
+  // Ex: if first of Oct. is Sunday (0), then add 8 days to get to second Monday
+  // Ex: if first of Oct. is Thursday (5), then add 11 days to get to second Monday
+  const daysToAddMap = [8, 14, 13, 12, 11, 10, 9];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Labor Day date
+  const columbusDay = new Date(year, 9, 1 + daysToAdd);
+  return columbusDay;
+}
+
+
+/***********************************
+** Function to get Memorial Day Date
+************************************/
+function getLaborDay(year) {
+  const septemberFirst = new Date(year, 8, 1);
+  const dayOfWeek = septemberFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
+  
+  // Array to map days to add based on the day of the week
+  // Elements in array are based off of calcuating the first of September to the first Monday of September
+  // Ex: if first of Sept. is Sunday (0), then add 1 days to get to first Monday
+  // Ex: if first of Sept. is Thursday (5), then add 4 days to get to first Monday
+  const daysToAddMap = [1, 0, 6, 5, 4, 3, 2];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Labor Day date
+  const laborDay = new Date(year, 8, 1 + daysToAdd);
+  return laborDay;
+}
+
+
+/***********************************
+** Function to get Memorial Day Date
+************************************/
+function getMemorialDay(year) {
+  const mayFirst = new Date(year, 4, 1);
+  const dayOfWeek = mayFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
+  
+  // Array to map days to add based on the day of the week
+  // Elements in array are based off of calcuating the first of May to the lasy Monday of May
+  // Ex: if first of May is Sunday (0), then add 28 days to get to last Monday
+  // Ex: if first of May is Thursday (5), then add 25 days to get to last Monday
+  const daysToAddMap = [29, 28, 27, 26, 25, 24, 23];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Memorial Day date
+  const memorialDay = new Date(year, 4, 1 + daysToAdd);
+  return memorialDay;
+}
+
+
 /***********************************
 ** Function to get Father's Day Date
 ************************************/
@@ -331,7 +444,7 @@ function getFathersDay(year) {
   // Calculate days to add
   const daysToAdd = daysToAddMap[dayOfWeek];
   
-  // Calculate Day-Light-Saving-End-Day date
+  // Calculate Father's Day date
   const fathersDay = new Date(year, 5, 1 + daysToAdd);
   return fathersDay;
 }
@@ -353,7 +466,7 @@ function getMothersDay(year) {
   // Calculate days to add
   const daysToAdd = daysToAddMap[dayOfWeek];
   
-  // Calculate Day-Light-Saving-End-Day date
+  // Calculate Mother's Day date
   const mothersDay = new Date(year, 4, 1 + daysToAdd);
   return mothersDay;
 }
@@ -419,7 +532,7 @@ function getPresidentDay(year) {
   // Calculate days to add
   const daysToAdd = daysToAddMap[dayOfWeek];
   
-  // Calculate Day-Light-Saving-Start-Day date
+  // Calculate President Day date
   const presidentDay = new Date(year, 1, 1 + daysToAdd);
   return presidentDay;
 }
@@ -441,7 +554,7 @@ function getMartinLutherKingJrDay(year) {
   // Calculate days to add
   const daysToAdd = daysToAddMap[dayOfWeek];
   
-  // Calculate Day-Light-Saving-Start-Day date
+  // Calculate MLK Jr Day date
   const mlkJrDay = new Date(year, 0, 1 + daysToAdd);
   return mlkJrDay;
 }
@@ -590,6 +703,42 @@ function showMothersDayTooltip(event) {
 function showFathersDayTooltip(event) {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.innerHTML = "Father's Day";
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/**********************************
+** Display Memorial Day Date in May
+**********************************/
+function showMemorialDayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = "Memorial Day";
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/**********************************
+** Display Labor Day Date in May
+**********************************/
+function showLaborDayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = "Labor Day";
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/**********************************
+** Display Columbus Day Date in May
+**********************************/
+function showColumbusDayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = "Columbus Day";
   tooltip.style.display = 'block';
   tooltip.style.left = `${event.pageX + 10}px`;
   tooltip.style.top = `${event.pageY - 20}px`;
