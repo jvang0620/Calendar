@@ -115,11 +115,13 @@ button {
 
 /**************************************************
 ** styles for holiday, easter, goodFriday, mlkJrDay
+** presidentDay
 **************************************************/
 .holiday, 
 .easter-day,
 .good-friday,
-.martinLutherKingJr-day  {
+.martinLutherKingJr-day,
+.presidentDay  {
   /* Set the position to relative for proper positioning of ::before */
   position: relative;
 }
@@ -127,7 +129,8 @@ button {
 .holiday::before,
 .easter-day::before,
 .good-friday::before,
-.martinLutherKingJr-day::before {
+.martinLutherKingJr-day::before,
+.presidentDay::before {
   content: '\2022'; /* Unicode character for a bullet point */
   font-size: 1.5em;
   color: black;

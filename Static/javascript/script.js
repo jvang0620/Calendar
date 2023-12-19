@@ -11,7 +11,6 @@ const holidays = {
   ],
   1: [ //Febuary
       { 14: "Valentine's Day" },
-      { 19: "Presidents' Day"}, //chnages every year (3rd Monday of Febuary)
       { 29: "Leap Day!!!"},
   ],
   2: [ //March
@@ -113,6 +112,9 @@ function createCalendarTable(year, month, calendarType) {
   const easterDate = getEasterDate(year);
   const goodFridayDate = getGoodFridayDate(year);
   const mlkJrDay = getMartinLutherKingJrDay(year);
+  const presidentDay = getPresidentDay(year);
+
+  console.log(presidentDay);
 
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
@@ -146,7 +148,9 @@ function createCalendarTable(year, month, calendarType) {
       else if (dayCounter <= daysInMonth) {
         cell.textContent = dayCounter;
 
-        // Check if the current day is Easter
+        /*********************************** 
+          Check if the current day is Easter
+        ***********************************/
         if (
           year === easterDate.getFullYear() &&
           month === easterDate.getMonth() &&
@@ -160,7 +164,9 @@ function createCalendarTable(year, month, calendarType) {
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
         
-        // Check if the current day is Good Friday
+        /****************************************
+        * Check if the current day is Good Friday
+        ****************************************/
         if (
           year === goodFridayDate.getFullYear() &&
           month === goodFridayDate.getMonth() &&
@@ -174,7 +180,9 @@ function createCalendarTable(year, month, calendarType) {
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
 
-        // Check if the current day is Martin Luther King Jr. Day
+        /*******************************************************
+        * Check if the current day is Martin Luther King Jr. Day
+        *******************************************************/
         if (
           year === mlkJrDay.getFullYear() &&
           month === mlkJrDay.getMonth() &&
@@ -185,6 +193,22 @@ function createCalendarTable(year, month, calendarType) {
 
           // when mouse is over cell, display Martin Luther King Jr. Day. If not, hide
           cell.addEventListener('mouseover', showMlkJrDayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
+        /******************************************
+        * Check if the current day is President Day
+        ******************************************/
+        if (
+          year === presidentDay.getFullYear() &&
+          month === presidentDay.getMonth() &&
+          dayCounter === presidentDay.getDate()
+        ) {
+          // Add css style class 'presidentDay' to cell
+          cell.classList.add('presidentDay');
+
+          // when mouse is over cell, display President Day. If not, hide
+          cell.addEventListener('mouseover', showPresidentDayTooltip);
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
 
@@ -222,12 +246,55 @@ function createCalendarTable(year, month, calendarType) {
 }
 
 
+/*******************************
+** Function to get President Day
+*******************************/
+function getPresidentDay(year) {
+  const febuaryFirst = new Date(year, 1, 1); 
+  const dayOfWeek = febuaryFirst.getDay(); 
+  let daysToAdd;
+
+  /************************************
+  ** Calculate days to the third Monday
+  ************************************/
+  if (dayOfWeek === 0) { //If the 1st is Sunday (0 represent Sunday)
+    daysToAdd = 15; //Set President Day date to 16th (15 represent the 16th of Febuary)
+  }
+  else if (dayOfWeek === 1) { //If the 1st is a Monday (1 represent Monday)
+    daysToAdd = 14; //Set President Day date to 15th (14 represent the 15th of Febuary)
+  }
+  else if (dayOfWeek === 2) { //If Tuesday
+    daysToAdd = 20; //Set date to 21st
+  }
+  else if (dayOfWeek === 3) { //If Wednesday
+    daysToAdd = 19; //Set date to 20th
+  }
+  else if (dayOfWeek === 4) { //If Thursday
+    daysToAdd = 18; //Set date to 19th
+  }
+  else if (dayOfWeek === 5) { //If Friday
+    daysToAdd = 17; //Set date to 18th
+  }
+  else { //If Saturday
+    daysToAdd = 16; //Set date to 17th
+  }
+
+  /*************************************************
+  * year ->  represents the year for the date
+  * 1 -> represents the month (1 stands for Febuary)
+  * 1 + daysToAdd -> represent the day of the month
+  *************************************************/
+  const presidentDay = new Date(year, 1, 1 + daysToAdd);
+  return presidentDay;
+}
+
+
 /********************************************
 ** Function to get Martin Luther King Jr Date
 ********************************************/
 function getMartinLutherKingJrDay(year) {
-  const januaryFirst = new Date(year, 0, 1); // Mon Jan 01, 2024 00:00:00 GMT-0500 (EST)
-  const dayOfWeek = januaryFirst.getDay(); //print 1 (1 mean the 1st of January 2024 is a Monday)
+  const januaryFirst = new Date(year, 0, 1); 
+  const dayOfWeek = januaryFirst.getDay(); 
   let daysToAdd;
 
   /************************************
@@ -239,22 +306,27 @@ function getMartinLutherKingJrDay(year) {
   else if (dayOfWeek === 1) { //If the 1st is a Monday (1 represent Monday)
     daysToAdd = 14; //Set MLK Jr date to 15th (14 represent the 15th of January)
   }
-  else if (dayOfWeek === 2) { //If the 1st is a Tuesday
-    daysToAdd = 20; //Set MLK Jr date to 21st
+  else if (dayOfWeek === 2) { //If Tuesday
+    daysToAdd = 20; //Set date to 21st
   }
-  else if (dayOfWeek === 3) { //If the 1st is a Wednesday
-    daysToAdd = 19; //Set MLK Jr date to 20th
+  else if (dayOfWeek === 3) { //If Wednesday
+    daysToAdd = 19; //Set date to 20th
   }
-  else if (dayOfWeek === 4) { //If the 1st is a Thursday
-    daysToAdd = 18; //Set MLK Jr date to 19th
+  else if (dayOfWeek === 4) { //If Thursday
+    daysToAdd = 18; //Set date to 19th
   }
-  else if (dayOfWeek === 5) { //If the 1st is a Friday
-    daysToAdd = 17; //Set MLK Jr date to 18th
+  else if (dayOfWeek === 5) { //If Friday
+    daysToAdd = 17; //Set date to 18th
   }
-  else { //If the 1st is a Saturday
-    daysToAdd = 16; //Set MLK Jr date to 17th
+  else { //If Saturday
+    daysToAdd = 16; //Set date to 17th
   }
 
+  /*************************************************
+  * year ->  represents the year for the date
+  * 0 -> represents the month (0 stands for January)
+  * 1 + daysToAdd -> represent the day of the month
+  *************************************************/
   const mlkJrDay = new Date(year, 0, 1 + daysToAdd);
   return mlkJrDay;
 }
@@ -306,6 +378,19 @@ function getGoodFridayDate(year) {
 
   return new Date(year, month, day);
 }
+
+
+/*******************
+  Show President Day
+********************/
+function showPresidentDayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = 'President Day';
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
 
 /***************************
   Show Martin Luther King Jr
