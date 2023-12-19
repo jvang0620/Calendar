@@ -224,7 +224,7 @@ function createCalendarTable(year, month, calendarType) {
           cell.classList.add('dayLightSavingStartDay');
 
           // when mouse is over cell, display 'Day Light Saving Start'. If mouse not over, hide
-          cell.addEventListener('mouseover', showGoodFridayTooltip);
+          cell.addEventListener('mouseover', showDayLightSavingStartsTooltip);
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
 
@@ -271,40 +271,16 @@ function createCalendarTable(year, month, calendarType) {
 ** Function to get President Day
 *******************************/
 function getDayLightSavingStartDay(year) {
-  const marchFirst = new Date(year, 2, 1); 
-  const dayOfWeek = marchFirst.getDay(); 
-  let daysToAdd;
-
-  /**************************************
-  ** Calculate days to the second Sunday
-  **************************************/
-  if (dayOfWeek === 0) { //If the 1st is Sunday (0 represent Sunday)
-    daysToAdd = 7; //Set Day-Light-Saving-Start-Day date to 16th (7 represent the 8th of March)
-  }
-  else if (dayOfWeek === 1) { //If the 1st is a Monday (1 represent Monday)
-    daysToAdd = 13; //Set Day-Light-Saving-Start-Day date to 14th (13 represent the 14th of Febuary)
-  }
-  else if (dayOfWeek === 2) { //If Tuesday
-    daysToAdd = 12; //Set date to 13th
-  }
-  else if (dayOfWeek === 3) { //If Wednesday
-    daysToAdd = 11; //Set date to 12th
-  }
-  else if (dayOfWeek === 4) { //If Thursday
-    daysToAdd = 10; //Set date to 11th
-  }
-  else if (dayOfWeek === 5) { //If Friday
-    daysToAdd = 9; //Set date to 10th
-  }
-  else { //If Saturday
-    daysToAdd = 8; //Set date to 9th
-  }
-
-  /*************************************************
-  * year ->  represents the year for the date
-  * 2 -> represents the month (2 stands for March)
-  * 1 + daysToAdd -> represent the day of the month
-  *************************************************/
+  const marchFirst = new Date(year, 2, 1);
+  const dayOfWeek = marchFirst.getDay();
+  
+  // Array to map days to add based on the day of the week
+  const daysToAddMap = [7, 13, 12, 11, 10, 9, 8];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Day-Light-Saving-Start-Day date
   const dayLightSavingStartDay = new Date(year, 2, 1 + daysToAdd);
   return dayLightSavingStartDay;
 }
@@ -498,7 +474,7 @@ function showGoodFridayTooltip(event) {
 /***********************************
 ** Display Day Light Saving in March
 ************************************/
-function showGoodFridayTooltip(event) {
+function showDayLightSavingStartsTooltip(event) {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.innerHTML = 'Day Light Saving Starts';
   tooltip.style.display = 'block';
