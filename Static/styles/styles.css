@@ -115,7 +115,9 @@ h3 {
 
 .current-day {
   font-weight: bold;
-  color: red; /*font color*/
+  color: black; /* font color */
+  background-color: rgb(255, 165, 0); /* background color */
+  border-radius: 50%; /* create a circular appearance */
 }
 
 /****************
