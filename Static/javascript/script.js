@@ -3,7 +3,7 @@ let currentMonth = 0; // January
 
 
 /**********************
-  Sample holidays/dates
+** Holidays/Observances 
 **********************/
 const holidays = {
   0: [ //January
@@ -11,25 +11,42 @@ const holidays = {
   ],
   1: [ //Febuary
       { 14: "Valentine's Day" },
-  ], 
+      { 19: "Presidents' Day"}, //chnages every year (3rd Monday of Febuary)
+      { 29: "Leap Day!!!"},
+  ],
+  2: [ //March
+    {10: "Daylight Saving Time Starts"}, //changes every year (2nd Sunday of March)
+    {17: "St. Patrick's Day"},
+    {19: "Spring Starts."} //https://www.calendardate.com/spring_2027.htm
+  ],
   4: [ //May
+      { 12: "Mother's Day"}, //changes every year (2nd Sunday of May)
       { 27: "Memorial Day" }, //changes every year (last monday of May)
   ], 
+  5: [
+      { 16: "Father's Day"}, //changes every year (3rd Sunday of June)
+      { 20: "Summer Starts"}, //changes yearly (https://www.calendardate.com/summer_2027.htm)
+  ],
   6: [ //July
       { 4: "Independence Day" }, 
   ],
   8: [ //September
       { 2: "Labor Day" }, //changes every year (1st monday of september)
+      { 22: "Autumn Starts"} //changes yearly (https://www.calendardate.com/autumn_2027.htm)
   ],
   9: [ //October
-      { 14: "Columbus Day" }, //changes every year 
+      { 14: "Columbus Day" }, //changes every year (2nd monday of october)
       { 31: "Hallowen"},
   ], 
   10: [ //November
-        { 11: "Veterans Day" }, 
+        { 3: "Daylight Saving Time Ends"}, //changes every year (1st Sunday of Nov)
+        { 4: "Election Day"}, //changes every year (1st Tuesday of November)
+        { 11: "Veterans Day" }, //Vet Day is still 11th but time offchanges when the 11th falls on Saturday/Sunday (If Sat, time off is on Friday (the day before). If Sunday, time off falls on Monday (the day after).
         { 28: "Thanksgiving Day" }, //changes every year 
+        { 29: "Black Friday"}, //changes every year
   ],
   11: [ //December
+        { 21: "Winter Starts"}, //changes yearly (https://www.calendardate.com/winter_2027.htm)
         { 24: "Christmas Eve"}, 
         { 25: "Christmas Day" },
         { 31: "New Year's Eve "},
