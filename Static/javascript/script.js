@@ -360,14 +360,16 @@ function calculateEasterRelatedDate(year, offset) {
 ** Function to get Easter Date
 *****************************/
 function getEasterDate(year) {
-  return calculateEasterRelatedDate(year, 0);
+  const offset = 0;
+  return calculateEasterRelatedDate(year, offset);
 }
 
 /*****************************
 ** Function to get Good Friday
 *****************************/
 function getGoodFridayDate(year) {
-  return calculateEasterRelatedDate(year, 2); // Good Friday is two days before Easter
+  const offset = 2; // Good Friday is two days before Easter
+  return calculateEasterRelatedDate(year, offset); 
 }
 
 
