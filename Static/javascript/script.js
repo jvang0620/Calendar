@@ -1,5 +1,7 @@
-let currentYear = 2024; //Current year
-let currentMonth = 0; // January
+let currentDate = new Date(); // Get current date
+let currentYear = currentDate.getFullYear(); // Get current year
+let currentMonth = currentDate.getMonth(); // Get current month (0-indexed, so January is 0)
+
 
 
 /**********************
