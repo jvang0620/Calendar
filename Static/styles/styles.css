@@ -89,11 +89,18 @@ h3 {
   color: #4169e1; /* Royal blue text color */
 }
 
-.holiday {
+.holiday, 
+.easter-day,
+.good-friday,
+.martinLutherKingJr-day  {
+  /* Set the position to relative for proper positioning of ::before */
   position: relative;
 }
 
-.holiday::before {
+.holiday::before,
+.easter-day::before,
+.good-friday::before,
+.martinLutherKingJr-day::before {
   content: '\2022'; /* Unicode character for a bullet point */
   font-size: 1.5em;
   color: black;
@@ -118,56 +125,4 @@ h3 {
   color: black; /* font color */
   background-color: rgb(255, 165, 0); /* background color */
   border-radius: 50%; /* create a circular appearance */
-}
-
-/****************
-** CSS for Easter 
-****************/
-.easter-day {
-  /* Set the position to relative for proper positioning of ::before */
-  position: relative; 
-}
-
-.easter-day::before {
-  content: '\2022'; /* Unicode character for a bullet point */
-  font-size: 1.5em;
-  color: black;
-  position: absolute;
-  top: 85%; /* Adjusted to position the dot underneath the number */
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-
-/*********************
-** CSS for Good Friday 
-*********************/
-.good-friday {
-  /* Set the position to relative for proper positioning of ::before */
-  position: relative; 
-}
-
-.good-friday::before {
-  content: '\2022'; /* Unicode character for a bullet point */
-  font-size: 1.5em;
-  color: black;
-  position: absolute;
-  top: 85%; /* Adjusted to position the dot underneath the number */
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.martinLutherKingJr-day {
-  /* Set the position to relative for proper positioning of ::before */
-  position: relative; 
-}
-
-.martinLutherKingJr-day::before {
-  content: '\2022'; /* Unicode character for a bullet point */
-  font-size: 1.5em;
-  color: black;
-  position: absolute;
-  top: 85%; /* Adjusted to position the dot underneath the number */
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
