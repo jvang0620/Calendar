@@ -20,11 +20,9 @@ const holidays = {
     {19: "Spring Starts."} //https://www.calendardate.com/spring_2027.htm
   ],
   4: [ //May
-      { 12: "Mother's Day"}, //changes every year (2nd Sunday of May)
       { 27: "Memorial Day" }, //changes every year (last monday of May)
   ], 
   5: [
-      { 16: "Father's Day"}, //changes every year (3rd Sunday of June)
       { 20: "Summer Starts"}, //changes yearly (https://www.calendardate.com/summer_2027.htm)
   ],
   6: [ //July
@@ -115,6 +113,8 @@ function createCalendarTable(year, month, calendarType) {
   const presidentDay = getPresidentDay(year);
   const dayLightSavingStartDay = getDayLightSavingStartDay(year);
   const dayLightSavingEndDay = getDayLightSavingEndDay(year);
+  const mothersDay = getMothersDay(year);
+  const fathersDay = getFathersDay(year);
 
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
@@ -244,6 +244,38 @@ function createCalendarTable(year, month, calendarType) {
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
 
+        /**********************************************
+        * Check if the current day is Mother's Day Date
+        ***********************************************/
+        if (
+          year === mothersDay.getFullYear() &&
+          month === mothersDay.getMonth() &&
+          dayCounter === mothersDay.getDate()
+        ) {
+          // Add css style class 'mothersDay' to cell
+          cell.classList.add('mothersDay');
+
+          // when mouse is over cell, display 'Mother's Day'. If mouse not over, hide
+          cell.addEventListener('mouseover', showMothersDayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
+        /**********************************************
+        * Check if the current day is Father's Day Date
+        ***********************************************/
+        if (
+          year === fathersDay.getFullYear() &&
+          month === fathersDay.getMonth() &&
+          dayCounter === fathersDay.getDate()
+        ) {
+          // Add css style class 'fathersDay' to cell
+          cell.classList.add('fathersDay');
+
+          // when mouse is over cell, display 'Father's Day'. If mouse not over, hide
+          cell.addEventListener('mouseover', showFathersDayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
         //retrieves the array of holidays for the current month from the holidays object.
         const monthHolidays = holidays[month];
 
@@ -280,6 +312,50 @@ function createCalendarTable(year, month, calendarType) {
 
   table.appendChild(tbody);
   return table;
+}
+
+
+/***********************************
+** Function to get Father's Day Date
+************************************/
+function getFathersDay(year) {
+  const juneFirst = new Date(year, 5, 1);
+  const dayOfWeek = juneFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
+  
+  // Array to map days to add based on the day of the week
+  // Elements in array are based off of calcuating the first of June to the third Sunday of June
+  // Ex: if first of June is Sunday (0), then add 14 days to get to third sunday
+  // Ex: if first of June is Thursday (5), then add 17 days to get to third sunday
+  const daysToAddMap = [14, 20, 19, 18, 17, 16, 15];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Day-Light-Saving-End-Day date
+  const fathersDay = new Date(year, 5, 1 + daysToAdd);
+  return fathersDay;
+}
+
+
+/***********************************
+** Function to get Mother's Day Date
+************************************/
+function getMothersDay(year) {
+  const mayFirst = new Date(year, 4, 1);
+  const dayOfWeek = mayFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
+  
+  // Array to map days to add based on the day of the week
+  // Elements in array are based off of calcuating the first of May to the second Sunday of May
+  // Ex: if first of May is Sunday (0), then add 7 days to get to second sunday
+  // Ex: if first of May is Thursday (5), then add 10 days to get to second sunday
+  const daysToAddMap = [7, 13, 12, 11, 10, 9, 8];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Day-Light-Saving-End-Day date
+  const mothersDay = new Date(year, 4, 1 + daysToAdd);
+  return mothersDay;
 }
 
 
@@ -490,6 +566,30 @@ function showDayLightSavingStartsTooltip(event) {
 function showDayLightSavingEndsTooltip(event) {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.innerHTML = 'Day Light Saving Ends';
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/***********************************
+** Display Mother's Day Date in May
+***********************************/
+function showMothersDayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = "Mother's Day";
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/**********************************
+** Display Father's Day Date in May
+**********************************/
+function showFathersDayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = "Father's Day";
   tooltip.style.display = 'block';
   tooltip.style.left = `${event.pageX + 10}px`;
   tooltip.style.top = `${event.pageY - 20}px`;
