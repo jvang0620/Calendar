@@ -294,39 +294,18 @@ function getDayLightSavingStartDay(year) {
 *******************************/
 function getPresidentDay(year) {
   const febuaryFirst = new Date(year, 1, 1); 
-  const dayOfWeek = febuaryFirst.getDay(); 
-  let daysToAdd;
+  const dayOfWeek = febuaryFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
 
-  /************************************
-  ** Calculate days to the third Monday
-  ************************************/
-  if (dayOfWeek === 0) { //If the 1st is Sunday (0 represent Sunday)
-    daysToAdd = 15; //Set President Day date to 16th (15 represent the 16th of Febuary)
-  }
-  else if (dayOfWeek === 1) { //If the 1st is a Monday (1 represent Monday)
-    daysToAdd = 14; //Set President Day date to 15th (14 represent the 15th of Febuary)
-  }
-  else if (dayOfWeek === 2) { //If Tuesday
-    daysToAdd = 20; //Set date to 21st
-  }
-  else if (dayOfWeek === 3) { //If Wednesday
-    daysToAdd = 19; //Set date to 20th
-  }
-  else if (dayOfWeek === 4) { //If Thursday
-    daysToAdd = 18; //Set date to 19th
-  }
-  else if (dayOfWeek === 5) { //If Friday
-    daysToAdd = 17; //Set date to 18th
-  }
-  else { //If Saturday
-    daysToAdd = 16; //Set date to 17th
-  }
-
-  /*************************************************
-  * year ->  represents the year for the date
-  * 1 -> represents the month (1 stands for Febuary)
-  * 1 + daysToAdd -> represent the day of the month
-  *************************************************/
+  // Array to map days to add based on the day of the week
+  // Elements in array are based of calcuating the first of Febuary to the third Monday of Febuary
+  // Ex: if first of Febuary is Sunday (0), then add 15 days to get to third Monday
+  // Ex: if first of Febuary is Thursday (5), then add 18 days to get to third Monday
+  const daysToAddMap = [15, 14, 20, 19, 18, 17, 16];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Day-Light-Saving-Start-Day date
   const presidentDay = new Date(year, 1, 1 + daysToAdd);
   return presidentDay;
 }
@@ -337,39 +316,18 @@ function getPresidentDay(year) {
 ********************************************/
 function getMartinLutherKingJrDay(year) {
   const januaryFirst = new Date(year, 0, 1); 
-  const dayOfWeek = januaryFirst.getDay(); 
-  let daysToAdd;
+  const dayOfWeek = januaryFirst.getDay(); ////if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
 
-  /************************************
-  ** Calculate days to the third Monday
-  ************************************/
-  if (dayOfWeek === 0) { //If the 1st is Sunday (0 represent Sunday)
-    daysToAdd = 15; //Set MLK Jr date to 16th (15 represent the 16th of January)
-  }
-  else if (dayOfWeek === 1) { //If the 1st is a Monday (1 represent Monday)
-    daysToAdd = 14; //Set MLK Jr date to 15th (14 represent the 15th of January)
-  }
-  else if (dayOfWeek === 2) { //If Tuesday
-    daysToAdd = 20; //Set date to 21st
-  }
-  else if (dayOfWeek === 3) { //If Wednesday
-    daysToAdd = 19; //Set date to 20th
-  }
-  else if (dayOfWeek === 4) { //If Thursday
-    daysToAdd = 18; //Set date to 19th
-  }
-  else if (dayOfWeek === 5) { //If Friday
-    daysToAdd = 17; //Set date to 18th
-  }
-  else { //If Saturday
-    daysToAdd = 16; //Set date to 17th
-  }
-
-  /*************************************************
-  * year ->  represents the year for the date
-  * 0 -> represents the month (0 stands for January)
-  * 1 + daysToAdd -> represent the day of the month
-  *************************************************/
+  // Array to map days to add based on the day of the week
+  // Elements in array are based of calcuating the first of January to the third Monday of January
+  // Ex: if first of January is Sunday (0), then add 15 days to get to third Monday
+  // Ex: if first of January is Thursday (5), then add 18 days to get to third Monday
+  const daysToAddMap = [15, 14, 20, 19, 18, 17, 16];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Day-Light-Saving-Start-Day date
   const mlkJrDay = new Date(year, 0, 1 + daysToAdd);
   return mlkJrDay;
 }
