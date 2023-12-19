@@ -1,3 +1,6 @@
+/*****************
+** styles for body
+******************/
 body {
   font-family: Arial, sans-serif;
   margin: 20px;
@@ -5,11 +8,24 @@ body {
   color: #333; /* Dark text color */
 }
 
+
+/*****************************************
+** styles for headers
+*****************************************/
 h2 {
   color: black; 
   font-size: xx-large;
 }
 
+h3 {
+  display: inline-block;
+  color: #4169e1; /* Royal blue text color */
+}
+
+
+/*****************************************
+** styles for tables, table header, table data
+*****************************************/
 table {
   border-collapse: collapse;
   width: 100%;
@@ -42,6 +58,10 @@ th {
   background-color: #87ceeb; /* Sky blue header background color */
 }
 
+
+/********************************
+** styles for calendar containers
+********************************/
 #calendar-container {
   margin-bottom: 20px;
   
@@ -51,10 +71,6 @@ th {
   display: inline-block;
   margin-right: 35px; 
   vertical-align: top; 
-}
-
-.current-month {
-  width: 80%; 
 }
 
 @media only screen and (max-width: 768px) {
@@ -68,6 +84,18 @@ th {
   font-size: xx-large;
 }
 
+
+/**********************************
+** styles for display current month
+**********************************/
+.current-month {
+  width: 80%; 
+}
+
+
+/********************
+** styles for buttons
+********************/
 #nav-buttons {
   text-align: center;
   margin-bottom: 10px;
@@ -84,11 +112,10 @@ button {
   cursor: pointer;
 }
 
-h3 {
-  display: inline-block;
-  color: #4169e1; /* Royal blue text color */
-}
 
+/**************************************************
+** styles for holiday, easter, goodFriday, mlkJrDay
+**************************************************/
 .holiday, 
 .easter-day,
 .good-friday,
@@ -110,6 +137,10 @@ h3 {
   transform: translate(-50%, -50%);
 }
 
+
+/****************************
+** styles for holiday-tooltip
+****************************/
 .holiday-tooltip {
   position: absolute;
   background-color: #333;
@@ -120,6 +151,10 @@ h3 {
   z-index: 1;
 }
 
+
+/************************************
+** styles for current day on calendar
+************************************/
 .current-day {
   font-weight: bold;
   color: black; /* font color */
