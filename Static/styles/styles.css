@@ -121,7 +121,8 @@ button {
 .easter-day,
 .good-friday,
 .martinLutherKingJr-day,
-.presidentDay  {
+.presidentDay,
+.dayLightSavingStartDay  {
   /* Set the position to relative for proper positioning of ::before */
   position: relative;
 }
@@ -130,7 +131,8 @@ button {
 .easter-day::before,
 .good-friday::before,
 .martinLutherKingJr-day::before,
-.presidentDay::before {
+.presidentDay::before,
+.dayLightSavingStartDay::before {
   content: '\2022'; /* Unicode character for a bullet point */
   font-size: 1.5em;
   color: black;

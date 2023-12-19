@@ -16,7 +16,6 @@ const holidays = {
       { 29: "Leap Day!!!"},
   ],
   2: [ //March
-    {10: "Daylight Saving Time Starts"}, //changes every year (2nd Sunday of March)
     {17: "St. Patrick's Day"},
     {19: "Spring Starts."} //https://www.calendardate.com/spring_2027.htm
   ],
@@ -115,6 +114,7 @@ function createCalendarTable(year, month, calendarType) {
   const goodFridayDate = getGoodFridayDate(year);
   const mlkJrDay = getMartinLutherKingJrDay(year);
   const presidentDay = getPresidentDay(year);
+  const dayLightSavingStartDay = getDayLightSavingStartDay(year);
 
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
@@ -212,6 +212,22 @@ function createCalendarTable(year, month, calendarType) {
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
 
+        /*************************************************************
+        * Check if the current day is Day Light Saving Time Start Date
+        *************************************************************/
+        if (
+          year === dayLightSavingStartDay.getFullYear() &&
+          month === dayLightSavingStartDay.getMonth() &&
+          dayCounter === dayLightSavingStartDay.getDate()
+        ) {
+          // Add css style class 'dayLightSavingStartDay' to cell
+          cell.classList.add('dayLightSavingStartDay');
+
+          // when mouse is over cell, display President Day. If not, hide
+          cell.addEventListener('mouseover', showGoodFridayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
         const monthHolidays = holidays[month];
 
         if (monthHolidays) {
@@ -243,6 +259,49 @@ function createCalendarTable(year, month, calendarType) {
 
   table.appendChild(tbody);
   return table;
+}
+
+
+/*******************************
+** Function to get President Day
+*******************************/
+function getDayLightSavingStartDay(year) {
+  const marchFirst = new Date(year, 2, 1); 
+  const dayOfWeek = marchFirst.getDay(); 
+  let daysToAdd;
+
+  /**************************************
+  ** Calculate days to the second Sunday
+  **************************************/
+  if (dayOfWeek === 0) { //If the 1st is Sunday (0 represent Sunday)
+    daysToAdd = 7; //Set Day-Light-Saving-Start-Day date to 16th (7 represent the 8th of March)
+  }
+  else if (dayOfWeek === 1) { //If the 1st is a Monday (1 represent Monday)
+    daysToAdd = 13; //Set Day-Light-Saving-Start-Day date to 14th (13 represent the 14th of Febuary)
+  }
+  else if (dayOfWeek === 2) { //If Tuesday
+    daysToAdd = 12; //Set date to 13th
+  }
+  else if (dayOfWeek === 3) { //If Wednesday
+    daysToAdd = 11; //Set date to 12th
+  }
+  else if (dayOfWeek === 4) { //If Thursday
+    daysToAdd = 10; //Set date to 11th
+  }
+  else if (dayOfWeek === 5) { //If Friday
+    daysToAdd = 9; //Set date to 10th
+  }
+  else { //If Saturday
+    daysToAdd = 8; //Set date to 9th
+  }
+
+  /*************************************************
+  * year ->  represents the year for the date
+  * 2 -> represents the month (2 stands for March)
+  * 1 + daysToAdd -> represent the day of the month
+  *************************************************/
+  const dayLightSavingStartDay = new Date(year, 2, 1 + daysToAdd);
+  return dayLightSavingStartDay;
 }
 
 
@@ -425,6 +484,18 @@ function showEasterTooltip(event) {
 function showGoodFridayTooltip(event) {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.innerHTML = 'Good Friday';
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/***********************************
+** Display Day Light Saving in March
+************************************/
+function showGoodFridayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = 'Day Light Saving Starts';
   tooltip.style.display = 'block';
   tooltip.style.left = `${event.pageX + 10}px`;
   tooltip.style.top = `${event.pageY - 20}px`;
