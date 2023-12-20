@@ -17,7 +17,7 @@ const holidays = {
   ],
   2: [ //March
     {17: "St. Patrick's Day"},
-    {19: "Spring Starts."} //https://www.timeanddate.com/calendar/seasons.html?year=2000
+    {19: "Spring Starts"} //https://www.timeanddate.com/calendar/seasons.html?year=2000
   ],
   5: [
       { 20: "Summer Starts"}, //changes yearly: https://www.timeanddate.com/calendar/seasons.html?year=2000
@@ -136,10 +136,36 @@ function highlightCurrentDay(cell, year, month, dayCounter, currentDate, current
   }
 }
 
+/**
+ * 
+ * @param {*} cell 
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} dayCounter 
+ * @param {*} date 
+ * @param {*} cssClass 
+ * @param {*} tooltipFunction 
+ */
+function checkAndAddHoliday(cell, year, month, dayCounter, date, cssClass, tooltipFunction) {
+  if (
+    year === date.getFullYear() &&
+    month === date.getMonth() &&
+    dayCounter === date.getDate()
+  ) {
+    cell.classList.add(cssClass);
+    cell.addEventListener('mouseover', tooltipFunction);
+    cell.addEventListener('mouseout', hideHolidayTooltip);
+  }
+}
 
-/**************************
-  Create the calendar table
-**************************/
+
+/**
+ * Create the calendar table
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} calendarType 
+ * @returns 
+ */
 function createCalendarTable(year, month, calendarType) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = new Date(year, month, 1).getDay();
@@ -192,229 +218,22 @@ function createCalendarTable(year, month, calendarType) {
       else if (dayCounter <= daysInMonth) {
         cell.textContent = dayCounter;
 
-        /*********************************** 
-          Check if the current day is Easter
-        ***********************************/
-        if (
-          year === easterDate.getFullYear() &&
-          month === easterDate.getMonth() &&
-          (dayCounter === easterDate.getDate() || dayCounter === easterDate.getDate() - 2)
-        ) {
-          //Add css style class 'eholidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
 
-          //when mouse is over cell, display Easter. If not, hide
-          cell.addEventListener('mouseover', showEasterTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-        
-        /****************************************
-        * Check if the current day is Good Friday
-        ****************************************/
-        if (
-          year === goodFridayDate.getFullYear() &&
-          month === goodFridayDate.getMonth() &&
-          dayCounter === goodFridayDate.getDate()
-        ) {
-          //Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          //when mouse is over cell, display good friday. If not, hide
-          cell.addEventListener('mouseover', showGoodFridayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /*******************************************************
-        * Check if the current day is Martin Luther King Jr. Day
-        *******************************************************/
-        if (
-          year === mlkJrDayDate.getFullYear() &&
-          month === mlkJrDayDate.getMonth() &&
-          dayCounter === mlkJrDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display Martin Luther King Jr. Day. If not, hide
-          cell.addEventListener('mouseover', showMlkJrDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /******************************************
-        * Check if the current day is President Day
-        ******************************************/
-        if (
-          year === presidentDayDate.getFullYear() &&
-          month === presidentDayDate.getMonth() &&
-          dayCounter === presidentDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display President Day. If not, hide
-          cell.addEventListener('mouseover', showPresidentDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /*************************************************************
-        * Check if the current day is Day Light Saving Time Start Date
-        *************************************************************/
-        if (
-          year === dayLightSavingStartDayDate.getFullYear() &&
-          month === dayLightSavingStartDayDate.getMonth() &&
-          dayCounter === dayLightSavingStartDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display 'Day Light Saving Start'. If mouse not over, hide
-          cell.addEventListener('mouseover', showDayLightSavingStartsTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /*************************************************************
-        * Check if the current day is Day Light Saving Time End Date
-        *************************************************************/
-        if (
-          year === dayLightSavingEndDayDate.getFullYear() &&
-          month === dayLightSavingEndDayDate.getMonth() &&
-          dayCounter === dayLightSavingEndDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display 'Day Light Saving End'. If mouse not over, hide
-          cell.addEventListener('mouseover', showDayLightSavingEndsTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /**********************************************
-        * Check if the current day is Mother's Day Date
-        ***********************************************/
-        if (
-          year === mothersDayDate.getFullYear() &&
-          month === mothersDayDate.getMonth() &&
-          dayCounter === mothersDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display 'Mother's Day'. If mouse not over, hide
-          cell.addEventListener('mouseover', showMothersDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /**********************************************
-        * Check if the current day is Father's Day Date
-        ***********************************************/
-        if (
-          year === fathersDayDate.getFullYear() &&
-          month === fathersDayDate.getMonth() &&
-          dayCounter === fathersDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display 'Father's Day'. If mouse not over, hide
-          cell.addEventListener('mouseover', showFathersDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /**********************************************
-        * Check if the current day is Memorial Day Date
-        ***********************************************/
-        if (
-          year === memorialDayDate.getFullYear() &&
-          month === memorialDayDate.getMonth() &&
-          dayCounter === memorialDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display 'Memorial's Day'. If mouse not over, hide
-          cell.addEventListener('mouseover', showMemorialDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /**********************************************
-        * Check if the current day is Labor Day Date
-        ***********************************************/
-        if (
-          year === laborDayDate.getFullYear() &&
-          month === laborDayDate.getMonth() &&
-          dayCounter === laborDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display 'Labor Day'. If mouse not over, hide
-          cell.addEventListener('mouseover', showLaborDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /**********************************************
-        * Check if the current day is Columbus Day
-        ***********************************************/
-        if (
-          year === columbusDayDate.getFullYear() &&
-          month === columbusDayDate.getMonth() &&
-          dayCounter === columbusDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display 'Labor Day'. If mouse not over, hide
-          cell.addEventListener('mouseover', showColumbusDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /**********************************************
-        * Check if the current day is Election Day
-        ***********************************************/
-        if (
-          year === electionDayDate.getFullYear() &&
-          month === electionDayDate.getMonth() &&
-          dayCounter === electionDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display 'Election Day'. If mouse not over, hide
-          cell.addEventListener('mouseover', showElectionDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /**********************************************
-        * Check if the current day is Veterans Day
-        ***********************************************/
-        if (
-          year === veteransDayDate.getFullYear() &&
-          month === veteransDayDate.getMonth() &&
-          dayCounter === veteransDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display 'Veterans Day'. If mouse not over, hide
-          cell.addEventListener('mouseover', showVeteransDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
-
-        /**********************************************
-        * Check if the current day is Thanksgiving Day
-        ***********************************************/
-        if (
-          year === thanksgivingDayDate.getFullYear() &&
-          month === thanksgivingDayDate.getMonth() &&
-          dayCounter === thanksgivingDayDate.getDate()
-        ) {
-          // Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('holidays-observances-css');
-
-          // when mouse is over cell, display 'Thanksgiving Day'. If mouse not over, hide
-          cell.addEventListener('mouseover', showThanksgivingDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
+        //check and add holidays
+        checkAndAddHoliday(cell, year, month, dayCounter, easterDate, 'holidays-observances-css', showEasterTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, goodFridayDate, 'holidays-observances-css', showGoodFridayTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, mlkJrDayDate, 'holidays-observances-css', showMlkJrDayTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, presidentDayDate, 'holidays-observances-css', showPresidentDayTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, dayLightSavingStartDayDate, 'holidays-observances-css', showDayLightSavingStartsTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, dayLightSavingEndDayDate, 'holidays-observances-css', showDayLightSavingEndsTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, mothersDayDate, 'holidays-observances-css', showMothersDayTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, fathersDayDate, 'holidays-observances-css', showFathersDayTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, memorialDayDate, 'holidays-observances-css', showMemorialDayTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, laborDayDate, 'holidays-observances-css', showLaborDayTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, columbusDayDate, 'holidays-observances-css', showColumbusDayTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, electionDayDate, 'holidays-observances-css', showElectionDayTooltip);
+        checkAndAddHoliday(cell, year, month, dayCounter, veteransDayDate, 'holidays-observances-css', showVeteransDayTooltip);     
+        checkAndAddHoliday(cell, year, month, dayCounter, thanksgivingDayDate, 'holidays-observances-css', showThanksgivingDayTooltip);
 
         //retrieves the array of holidays for the current month from the holidays object.
         const monthHolidays = holidays[month];
