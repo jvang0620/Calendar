@@ -17,16 +17,16 @@ const holidays = {
   ],
   2: [ //March
     {17: "St. Patrick's Day"},
-    {19: "Spring Starts."} //https://www.calendardate.com/spring_2027.htm
+    {19: "Spring Starts."} //https://www.timeanddate.com/calendar/seasons.html?year=2000
   ],
   5: [
-      { 20: "Summer Starts"}, //changes yearly (https://www.calendardate.com/summer_2027.htm)
+      { 20: "Summer Starts"}, //changes yearly: https://www.timeanddate.com/calendar/seasons.html?year=2000
   ],
   6: [ //July
       { 4: "Independence Day" }, 
   ],
   8: [ //September
-      { 22: "Autumn Starts"} //changes yearly (https://www.calendardate.com/autumn_2027.htm)
+      { 22: "Autumn Starts"} //changes yearly: https://www.timeanddate.com/calendar/seasons.html?year=2000
   ],
   9: [ //October
       { 31: "Hallowen"},
@@ -35,7 +35,7 @@ const holidays = {
         { 11: "Veterans Day"},
   ],
   11: [ //December
-        { 21: "Winter Starts"}, //changes yearly (https://www.calendardate.com/winter_2027.htm)
+        { 21: "Winter Starts"}, //changes yearly: https://www.timeanddate.com/calendar/seasons.html?year=2000
         { 24: "Christmas Eve"}, 
         { 25: "Christmas Day" },
         { 31: "New Year's Eve "},
