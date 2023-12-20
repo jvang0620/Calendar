@@ -112,6 +112,7 @@ function createCalendarTable(year, month, calendarType) {
   const memorialDay = getMemorialDay(year);
   const laborDay = getLaborDay(year);
   const columbusDay = getColumbusDay(year);
+  const electionDay =  getElectionDay(year);
 
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
@@ -321,6 +322,22 @@ function createCalendarTable(year, month, calendarType) {
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
 
+        /**********************************************
+        * Check if the current day is Election Day
+        ***********************************************/
+        if (
+          year === electionDay.getFullYear() &&
+          month === electionDay.getMonth() &&
+          dayCounter === electionDay.getDate()
+        ) {
+          // Add css style class 'electionDay' to cell
+          cell.classList.add('electionDay');
+
+          // when mouse is over cell, display 'Election Day'. If mouse not over, hide
+          cell.addEventListener('mouseover', showElectionDayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
         //retrieves the array of holidays for the current month from the holidays object.
         const monthHolidays = holidays[month];
 
@@ -360,8 +377,27 @@ function createCalendarTable(year, month, calendarType) {
 }
 
 
-  // { 14: "Columbus Day" }, //changes every year (2nd monday of october)
-  // { 4: "Election Day"}, //changes every year (1st Tuesday of November)
+/***********************************
+** Function to get Election Day Date
+************************************/
+function getElectionDay(year) {
+  const novemberFirst = new Date(year, 10, 1);
+  const dayOfWeek = novemberFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
+  
+  // Elements in array are based off of calcuating the first of November to the first Tueday of November
+  // Ex: if first of Nov. is Sunday (0), then add 2 days to get to second Monday
+  // Ex: if first of Nov. is Thursday (5), then add 5 days to get to second Monday
+  const daysToAddMap = [2, 8, 7, 6, 5, 4, 3];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Labor Day date
+  const electionDay = new Date(year, 10, 1 + daysToAdd);
+  return electionDay;
+}
+
+
 
 /***********************************
 ** Function to get Columbus Day Date
@@ -739,6 +775,18 @@ function showLaborDayTooltip(event) {
 function showColumbusDayTooltip(event) {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.innerHTML = "Columbus Day";
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/**********************************
+** Display Election Day Date in Nov
+**********************************/
+function showElectionDayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = "Election Day";
   tooltip.style.display = 'block';
   tooltip.style.left = `${event.pageX + 10}px`;
   tooltip.style.top = `${event.pageY - 20}px`;
