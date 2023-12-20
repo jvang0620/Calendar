@@ -171,7 +171,7 @@ function createCalendarTable(year, month, calendarType) {
           dayCounter === goodFridayDate.getDate()
         ) {
           //Add css style class 'holidays-observances-css' to cell
-          cell.classList.add('gholidays-observances-css');
+          cell.classList.add('holidays-observances-css');
 
           //when mouse is over cell, display good friday. If not, hide
           cell.addEventListener('mouseover', showGoodFridayTooltip);
