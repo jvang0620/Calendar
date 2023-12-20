@@ -103,16 +103,16 @@ function createCalendarTable(year, month, calendarType) {
   const currentDay = currentDate.getDate();
   const easterDate = getEasterDate(year);
   const goodFridayDate = getGoodFridayDate(year);
-  const mlkJrDay = getMartinLutherKingJrDay(year);
-  const presidentDay = getPresidentDay(year);
-  const dayLightSavingStartDay = getDayLightSavingStartDay(year);
-  const dayLightSavingEndDay = getDayLightSavingEndDay(year);
-  const mothersDay = getMothersDay(year);
-  const fathersDay = getFathersDay(year);
-  const memorialDay = getMemorialDay(year);
-  const laborDay = getLaborDay(year);
-  const columbusDay = getColumbusDay(year);
-  const electionDay =  getElectionDay(year);
+  const mlkJrDayDate = getMartinLutherKingJrDayDate(year);
+  const presidentDayDate = getPresidentDayDate(year);
+  const dayLightSavingStartDayDate = getDayLightSavingStartDayDateDate(year);
+  const dayLightSavingEndDayDate = getDayLightSavingEndDayDate(year);
+  const mothersDayDate = getMothersDayDate(year);
+  const fathersDayDate = getFathersDayDate(year);
+  const memorialDayDate = getMemorialDayDate(year);
+  const laborDayDate = getLaborDayDate(year);
+  const columbusDayDate = getColumbusDayDate(year);
+  const electionDayDate =  getElectionDayDate(year);
 
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
@@ -154,8 +154,8 @@ function createCalendarTable(year, month, calendarType) {
           month === easterDate.getMonth() &&
           (dayCounter === easterDate.getDate() || dayCounter === easterDate.getDate() - 2)
         ) {
-          //Add css style class 'easter-day' to cell
-          cell.classList.add('easter-day');
+          //Add css style class 'eholidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           //when mouse is over cell, display Easter. If not, hide
           cell.addEventListener('mouseover', showEasterTooltip);
@@ -170,8 +170,8 @@ function createCalendarTable(year, month, calendarType) {
           month === goodFridayDate.getMonth() &&
           dayCounter === goodFridayDate.getDate()
         ) {
-          //Add css style class 'good-friday' to cell
-          cell.classList.add('good-friday');
+          //Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('gholidays-observances-css');
 
           //when mouse is over cell, display good friday. If not, hide
           cell.addEventListener('mouseover', showGoodFridayTooltip);
@@ -182,12 +182,12 @@ function createCalendarTable(year, month, calendarType) {
         * Check if the current day is Martin Luther King Jr. Day
         *******************************************************/
         if (
-          year === mlkJrDay.getFullYear() &&
-          month === mlkJrDay.getMonth() &&
-          dayCounter === mlkJrDay.getDate()
+          year === mlkJrDayDate.getFullYear() &&
+          month === mlkJrDayDate.getMonth() &&
+          dayCounter === mlkJrDayDate.getDate()
         ) {
-          // Add css style class 'mlk-jr-day' to cell
-          cell.classList.add('martinLutherKingJr-day');
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           // when mouse is over cell, display Martin Luther King Jr. Day. If not, hide
           cell.addEventListener('mouseover', showMlkJrDayTooltip);
@@ -198,12 +198,12 @@ function createCalendarTable(year, month, calendarType) {
         * Check if the current day is President Day
         ******************************************/
         if (
-          year === presidentDay.getFullYear() &&
-          month === presidentDay.getMonth() &&
-          dayCounter === presidentDay.getDate()
+          year === presidentDayDate.getFullYear() &&
+          month === presidentDayDate.getMonth() &&
+          dayCounter === presidentDayDate.getDate()
         ) {
-          // Add css style class 'presidentDay' to cell
-          cell.classList.add('presidentDay');
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           // when mouse is over cell, display President Day. If not, hide
           cell.addEventListener('mouseover', showPresidentDayTooltip);
@@ -214,12 +214,12 @@ function createCalendarTable(year, month, calendarType) {
         * Check if the current day is Day Light Saving Time Start Date
         *************************************************************/
         if (
-          year === dayLightSavingStartDay.getFullYear() &&
-          month === dayLightSavingStartDay.getMonth() &&
-          dayCounter === dayLightSavingStartDay.getDate()
+          year === dayLightSavingStartDayDate.getFullYear() &&
+          month === dayLightSavingStartDayDate.getMonth() &&
+          dayCounter === dayLightSavingStartDayDate.getDate()
         ) {
-          // Add css style class 'dayLightSavingStartDay' to cell
-          cell.classList.add('dayLightSavingStartDay');
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           // when mouse is over cell, display 'Day Light Saving Start'. If mouse not over, hide
           cell.addEventListener('mouseover', showDayLightSavingStartsTooltip);
@@ -230,12 +230,12 @@ function createCalendarTable(year, month, calendarType) {
         * Check if the current day is Day Light Saving Time End Date
         *************************************************************/
         if (
-          year === dayLightSavingEndDay.getFullYear() &&
-          month === dayLightSavingEndDay.getMonth() &&
-          dayCounter === dayLightSavingEndDay.getDate()
+          year === dayLightSavingEndDayDate.getFullYear() &&
+          month === dayLightSavingEndDayDate.getMonth() &&
+          dayCounter === dayLightSavingEndDayDate.getDate()
         ) {
-          // Add css style class 'dayLightSavingEndDay' to cell
-          cell.classList.add('dayLightSavingEndDay');
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           // when mouse is over cell, display 'Day Light Saving End'. If mouse not over, hide
           cell.addEventListener('mouseover', showDayLightSavingEndsTooltip);
@@ -246,12 +246,12 @@ function createCalendarTable(year, month, calendarType) {
         * Check if the current day is Mother's Day Date
         ***********************************************/
         if (
-          year === mothersDay.getFullYear() &&
-          month === mothersDay.getMonth() &&
-          dayCounter === mothersDay.getDate()
+          year === mothersDayDate.getFullYear() &&
+          month === mothersDayDate.getMonth() &&
+          dayCounter === mothersDayDate.getDate()
         ) {
-          // Add css style class 'mothersDay' to cell
-          cell.classList.add('mothersDay');
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           // when mouse is over cell, display 'Mother's Day'. If mouse not over, hide
           cell.addEventListener('mouseover', showMothersDayTooltip);
@@ -262,12 +262,12 @@ function createCalendarTable(year, month, calendarType) {
         * Check if the current day is Father's Day Date
         ***********************************************/
         if (
-          year === fathersDay.getFullYear() &&
-          month === fathersDay.getMonth() &&
-          dayCounter === fathersDay.getDate()
+          year === fathersDayDate.getFullYear() &&
+          month === fathersDayDate.getMonth() &&
+          dayCounter === fathersDayDate.getDate()
         ) {
-          // Add css style class 'fathersDay' to cell
-          cell.classList.add('fathersDay');
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           // when mouse is over cell, display 'Father's Day'. If mouse not over, hide
           cell.addEventListener('mouseover', showFathersDayTooltip);
@@ -278,12 +278,12 @@ function createCalendarTable(year, month, calendarType) {
         * Check if the current day is Memorial Day Date
         ***********************************************/
         if (
-          year === memorialDay.getFullYear() &&
-          month === memorialDay.getMonth() &&
-          dayCounter === memorialDay.getDate()
+          year === memorialDayDate.getFullYear() &&
+          month === memorialDayDate.getMonth() &&
+          dayCounter === memorialDayDate.getDate()
         ) {
-          // Add css style class 'memorialDay' to cell
-          cell.classList.add('memorialDay');
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           // when mouse is over cell, display 'Memorial's Day'. If mouse not over, hide
           cell.addEventListener('mouseover', showMemorialDayTooltip);
@@ -294,12 +294,12 @@ function createCalendarTable(year, month, calendarType) {
         * Check if the current day is Labor Day Date
         ***********************************************/
         if (
-          year === laborDay.getFullYear() &&
-          month === laborDay.getMonth() &&
-          dayCounter === laborDay.getDate()
+          year === laborDayDate.getFullYear() &&
+          month === laborDayDate.getMonth() &&
+          dayCounter === laborDayDate.getDate()
         ) {
-          // Add css style class 'laborDay' to cell
-          cell.classList.add('laborDay');
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           // when mouse is over cell, display 'Labor Day'. If mouse not over, hide
           cell.addEventListener('mouseover', showLaborDayTooltip);
@@ -310,12 +310,12 @@ function createCalendarTable(year, month, calendarType) {
         * Check if the current day is Columbus Day
         ***********************************************/
         if (
-          year === columbusDay.getFullYear() &&
-          month === columbusDay.getMonth() &&
-          dayCounter === columbusDay.getDate()
+          year === columbusDayDate.getFullYear() &&
+          month === columbusDayDate.getMonth() &&
+          dayCounter === columbusDayDate.getDate()
         ) {
-          // Add css style class 'columbusDay' to cell
-          cell.classList.add('columbusDay');
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           // when mouse is over cell, display 'Labor Day'. If mouse not over, hide
           cell.addEventListener('mouseover', showColumbusDayTooltip);
@@ -326,12 +326,12 @@ function createCalendarTable(year, month, calendarType) {
         * Check if the current day is Election Day
         ***********************************************/
         if (
-          year === electionDay.getFullYear() &&
-          month === electionDay.getMonth() &&
-          dayCounter === electionDay.getDate()
+          year === electionDayDate.getFullYear() &&
+          month === electionDayDate.getMonth() &&
+          dayCounter === electionDayDate.getDate()
         ) {
-          // Add css style class 'electionDay' to cell
-          cell.classList.add('electionDay');
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
 
           // when mouse is over cell, display 'Election Day'. If mouse not over, hide
           cell.addEventListener('mouseover', showElectionDayTooltip);
@@ -350,7 +350,7 @@ function createCalendarTable(year, month, calendarType) {
 
             //checks if the day of the holiday matches the current day being processed in the calendar (dayCounter)
             if (parseInt(day) === dayCounter) {
-              cell.classList.add('holiday'); // if it's a holiday, it adds the CSS class 'holiday' to the cell
+              cell.classList.add('holidays-observances-css'); // if it's a holiday/observances, it adds the CSS class 'holidays-observances-css' to the cell
               cell.setAttribute('data-holiday', holidayName); //sets the 'data-holiday' attribute of the cell to the name of the holiday
               cell.addEventListener('mouseover', showHolidayTooltip); //show tooltip when mouse is over the cell
               cell.addEventListener('mouseout', hideHolidayTooltip); //hide tooltip
@@ -380,7 +380,7 @@ function createCalendarTable(year, month, calendarType) {
 /***********************************
 ** Function to get Election Day Date
 ************************************/
-function getElectionDay(year) {
+function getElectionDayDate(year) {
   const novemberFirst = new Date(year, 10, 1);
   const dayOfWeek = novemberFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
   
@@ -393,8 +393,8 @@ function getElectionDay(year) {
   const daysToAdd = daysToAddMap[dayOfWeek];
   
   // Calculate Labor Day date
-  const electionDay = new Date(year, 10, 1 + daysToAdd);
-  return electionDay;
+  const electionDayDate = new Date(year, 10, 1 + daysToAdd);
+  return electionDayDate;
 }
 
 
@@ -402,7 +402,7 @@ function getElectionDay(year) {
 /***********************************
 ** Function to get Columbus Day Date
 ************************************/
-function getColumbusDay(year) {
+function getColumbusDayDate(year) {
   const octoberFirst = new Date(year, 9, 1);
   const dayOfWeek = octoberFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
   
@@ -415,15 +415,15 @@ function getColumbusDay(year) {
   const daysToAdd = daysToAddMap[dayOfWeek];
   
   // Calculate Labor Day date
-  const columbusDay = new Date(year, 9, 1 + daysToAdd);
-  return columbusDay;
+  const columbusDayDate = new Date(year, 9, 1 + daysToAdd);
+  return columbusDayDate;
 }
 
 
 /***********************************
 ** Function to get Memorial Day Date
 ************************************/
-function getLaborDay(year) {
+function getLaborDayDate(year) {
   const septemberFirst = new Date(year, 8, 1);
   const dayOfWeek = septemberFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
   
@@ -437,15 +437,15 @@ function getLaborDay(year) {
   const daysToAdd = daysToAddMap[dayOfWeek];
   
   // Calculate Labor Day date
-  const laborDay = new Date(year, 8, 1 + daysToAdd);
-  return laborDay;
+  const laborDayDate = new Date(year, 8, 1 + daysToAdd);
+  return laborDayDate;
 }
 
 
 /***********************************
 ** Function to get Memorial Day Date
 ************************************/
-function getMemorialDay(year) {
+function getMemorialDayDate(year) {
   const mayFirst = new Date(year, 4, 1);
   const dayOfWeek = mayFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
   
@@ -459,15 +459,15 @@ function getMemorialDay(year) {
   const daysToAdd = daysToAddMap[dayOfWeek];
   
   // Calculate Memorial Day date
-  const memorialDay = new Date(year, 4, 1 + daysToAdd);
-  return memorialDay;
+  const memorialDayDate = new Date(year, 4, 1 + daysToAdd);
+  return memorialDayDate;
 }
 
 
 /***********************************
 ** Function to get Father's Day Date
 ************************************/
-function getFathersDay(year) {
+function getFathersDayDate(year) {
   const juneFirst = new Date(year, 5, 1);
   const dayOfWeek = juneFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
   
@@ -481,15 +481,15 @@ function getFathersDay(year) {
   const daysToAdd = daysToAddMap[dayOfWeek];
   
   // Calculate Father's Day date
-  const fathersDay = new Date(year, 5, 1 + daysToAdd);
-  return fathersDay;
+  const fathersDayDate = new Date(year, 5, 1 + daysToAdd);
+  return fathersDayDate;
 }
 
 
 /***********************************
 ** Function to get Mother's Day Date
 ************************************/
-function getMothersDay(year) {
+function getMothersDayDate(year) {
   const mayFirst = new Date(year, 4, 1);
   const dayOfWeek = mayFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
   
@@ -503,15 +503,15 @@ function getMothersDay(year) {
   const daysToAdd = daysToAddMap[dayOfWeek];
   
   // Calculate Mother's Day date
-  const mothersDay = new Date(year, 4, 1 + daysToAdd);
-  return mothersDay;
+  const mothersDayDate = new Date(year, 4, 1 + daysToAdd);
+  return mothersDayDate;
 }
 
 
 /****************************************
 ** Function to get DayLightSavingEndDay
 ****************************************/
-function getDayLightSavingEndDay(year) {
+function getDayLightSavingEndDayDate(year) {
   const novemberFirst = new Date(year, 10, 1);
   const dayOfWeek = novemberFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
   
@@ -525,15 +525,15 @@ function getDayLightSavingEndDay(year) {
   const daysToAdd = daysToAddMap[dayOfWeek];
   
   // Calculate Day-Light-Saving-End-Day date
-  const dayLightSavingEndDay = new Date(year, 10, 1 + daysToAdd);
-  return dayLightSavingEndDay;
+  const dayLightSavingEndDayDate = new Date(year, 10, 1 + daysToAdd);
+  return dayLightSavingEndDayDate;
 }
 
 
 /****************************************
-** Function to get DayLightSavingStartDay
+** Function to get DayLightSavingStartDayDate
 ****************************************/
-function getDayLightSavingStartDay(year) {
+function getDayLightSavingStartDayDateDate(year) {
   const marchFirst = new Date(year, 2, 1);
   const dayOfWeek = marchFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
   
@@ -547,15 +547,15 @@ function getDayLightSavingStartDay(year) {
   const daysToAdd = daysToAddMap[dayOfWeek];
   
   // Calculate Day-Light-Saving-Start-Day date
-  const dayLightSavingStartDay = new Date(year, 2, 1 + daysToAdd);
-  return dayLightSavingStartDay;
+  const dayLightSavingStartDayDate = new Date(year, 2, 1 + daysToAdd);
+  return dayLightSavingStartDayDate;
 }
 
 
 /*******************************
 ** Function to get President Day
 *******************************/
-function getPresidentDay(year) {
+function getPresidentDayDate(year) {
   const febuaryFirst = new Date(year, 1, 1); 
   const dayOfWeek = febuaryFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
 
@@ -569,15 +569,15 @@ function getPresidentDay(year) {
   const daysToAdd = daysToAddMap[dayOfWeek];
   
   // Calculate President Day date
-  const presidentDay = new Date(year, 1, 1 + daysToAdd);
-  return presidentDay;
+  const presidentDayDate = new Date(year, 1, 1 + daysToAdd);
+  return presidentDayDate;
 }
 
 
 /********************************************
 ** Function to get Martin Luther King Jr Date
 ********************************************/
-function getMartinLutherKingJrDay(year) {
+function getMartinLutherKingJrDayDate(year) {
   const januaryFirst = new Date(year, 0, 1); 
   const dayOfWeek = januaryFirst.getDay(); ////if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
 
@@ -591,8 +591,8 @@ function getMartinLutherKingJrDay(year) {
   const daysToAdd = daysToAddMap[dayOfWeek];
   
   // Calculate MLK Jr Day date
-  const mlkJrDay = new Date(year, 0, 1 + daysToAdd);
-  return mlkJrDay;
+  const mlkJrDayDate = new Date(year, 0, 1 + daysToAdd);
+  return mlkJrDayDate;
 }
 
 /**************************************************************

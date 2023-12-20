@@ -113,23 +113,15 @@ button {
 }
 
 
-/**************************************************
-** styles for holiday, easter, goodFriday, mlkJrDay
-** presidentDay
-**************************************************/
-.holiday, .easter-day, .good-friday, .martinLutherKingJr-day,
-.presidentDay, .dayLightSavingStartDay, .dayLightSavingEndDay,
-.mothersDay, .fathersDay, .memorialDay, .laborDay, 
-.columbusDay, .electionDay {
+/*************************************
+** styles for all holidays/observances
+*************************************/
+.holidays-observances-css {
   /* Set the position to relative for proper positioning of ::before */
   position: relative;
 }
 
-.holiday::before, .easter-day::before, .good-friday::before,
-.martinLutherKingJr-day::before, .presidentDay::before,
-.dayLightSavingStartDay::before, .dayLightSavingEndDay::before,
-.mothersDay::before, .fathersDay::before, .memorialDay::before,
-.laborDay::before, .columbusDay::before, .electionDay::before {
+.holidays-observances-css::before {
   content: '\2022'; /* Unicode character for a bullet point */
   font-size: 1.5em;
   color: black;
