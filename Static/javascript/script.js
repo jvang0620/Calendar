@@ -90,6 +90,52 @@ function createCalendarContainer(year, month, calendarType) {
   return container;
 }
 
+/**
+ * Funtion applies holiday-related styling and behavior to calendar cell if the day
+ * being processed corresponds to a holiday in the provided array of holidays
+ * for the current month
+ * @param {*} cell 
+ * @param {*} dayCounter 
+ * @param {*} monthHolidays 
+ */
+function applyHolidays(cell, dayCounter, monthHolidays) {
+  // checks if there are any holidays for the current month. If there are, it enters the block of code
+  if (monthHolidays) {
+    // iterates through each holiday in the array for the current month
+    monthHolidays.forEach(holiday => {
+      // extracts the day and holiday name from the first (and only) entry in the holiday object
+      const [day, holidayName] = Object.entries(holiday)[0];
+
+      // checks if the day of the holiday matches the current day being processed in the calendar (dayCounter)
+      if (parseInt(day) === dayCounter) {
+        cell.classList.add('holidays-observances-css'); // if it's a holiday/observances, it adds the CSS class 'holidays-observances-css' to the cell
+        cell.setAttribute('data-holiday', holidayName); // sets the 'data-holiday' attribute of the cell to the name of the holiday
+        cell.addEventListener('mouseover', showHolidayTooltip); // show tooltip when the mouse is over the cell
+        cell.addEventListener('mouseout', hideHolidayTooltip); // hide tooltip
+      }
+    });
+  }
+}
+
+/**
+ * Function highlights the current day in the calendar cell, providing interactive behavior
+ * such as showing a tooltip when the mouse is over the highlighted cell.
+ * @param {*} cell 
+ * @param {*} year 
+ * @param {*} month 
+ * @param {*} dayCounter 
+ * @param {*} currentDate 
+ * @param {*} currentDay 
+ */
+function highlightCurrentDay(cell, year, month, dayCounter, currentDate, currentDay) {
+  // checks if the current day being processed is the current day according to the system's date
+  if (year === currentDate.getFullYear() && month === currentDate.getMonth() && dayCounter === currentDay) {
+    cell.classList.add('current-day'); // if true, highlight the current day
+    cell.addEventListener('mouseover', showCurrentDayTooltip); // show tooltip when the mouse is over the cell
+    cell.addEventListener('mouseout', hideHolidayTooltip); // hide tooltip
+  }
+}
+
 
 /**************************
   Create the calendar table
@@ -373,29 +419,12 @@ function createCalendarTable(year, month, calendarType) {
         //retrieves the array of holidays for the current month from the holidays object.
         const monthHolidays = holidays[month];
 
-        //checks if there are any holidays for the current month. If there are, it enters the block of code
-        if (monthHolidays) {
-          //iterates through each holiday in the array for the current month
-          monthHolidays.forEach(holiday => {
-            //extracts the day and holiday name from the first (and only) entry in the holiday object
-            const [day, holidayName] = Object.entries(holiday)[0];
+        //applies holiday-related styling and behavior to calendar cell
+        applyHolidays(cell, dayCounter, monthHolidays);
 
-            //checks if the day of the holiday matches the current day being processed in the calendar (dayCounter)
-            if (parseInt(day) === dayCounter) {
-              cell.classList.add('holidays-observances-css'); // if it's a holiday/observances, it adds the CSS class 'holidays-observances-css' to the cell
-              cell.setAttribute('data-holiday', holidayName); //sets the 'data-holiday' attribute of the cell to the name of the holiday
-              cell.addEventListener('mouseover', showHolidayTooltip); //show tooltip when mouse is over the cell
-              cell.addEventListener('mouseout', hideHolidayTooltip); //hide tooltip
-            }
-          });
-        }
-
-        //checks if the current day being processed is the current day according to the system's date
-        if (year === currentDate.getFullYear() && month === currentDate.getMonth() && dayCounter === currentDay) {
-          cell.classList.add('current-day'); //if true, highlight the current day
-          cell.addEventListener('mouseover', showCurrentDayTooltip);
-          cell.addEventListener('mouseout', hideHolidayTooltip);
-        }
+        //highlights the current day in the calendar cell
+        highlightCurrentDay(cell, year, month, dayCounter, currentDate, currentDay);
+        
         dayCounter++;
       }
       row.appendChild(cell);
