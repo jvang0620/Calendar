@@ -33,8 +33,6 @@ const holidays = {
   ], 
   10: [ //November
         { 11: "Veterans Day"},
-        { 28: "Thanksgiving Day" }, //changes every year 
-        { 29: "Black Friday"}, //changes every year
   ],
   11: [ //December
         { 21: "Winter Starts"}, //changes yearly (https://www.calendardate.com/winter_2027.htm)
@@ -114,6 +112,7 @@ function createCalendarTable(year, month, calendarType) {
   const columbusDayDate = getColumbusDayDate(year);
   const electionDayDate =  getElectionDayDate(year);
   const veteransDayDate = getVeteransDayObserveDate(year);
+  const thanksgivingDayDate = getThanksgivingDayDate(year);
 
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
@@ -355,6 +354,22 @@ function createCalendarTable(year, month, calendarType) {
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
 
+        /**********************************************
+        * Check if the current day is Thanksgiving Day
+        ***********************************************/
+        if (
+          year === thanksgivingDayDate.getFullYear() &&
+          month === thanksgivingDayDate.getMonth() &&
+          dayCounter === thanksgivingDayDate.getDate()
+        ) {
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
+
+          // when mouse is over cell, display 'Thanksgiving Day'. If mouse not over, hide
+          cell.addEventListener('mouseover', showThanksgivingDayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
         //retrieves the array of holidays for the current month from the holidays object.
         const monthHolidays = holidays[month];
 
@@ -391,6 +406,27 @@ function createCalendarTable(year, month, calendarType) {
 
   table.appendChild(tbody);
   return table;
+}
+
+
+/*************************************
+** Function to get Thanksgiving Day Date
+*************************************/
+function getThanksgivingDayDate(year) {
+  const novemberFirst = new Date(year, 10, 1);
+  const dayOfWeek = novemberFirst.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
+  
+  // Elements in array are based off of calcuating the first of November to the fourth Thursday of November
+  // Ex: if first of Nov. is Sunday (0), then add 25 days to get to fourth Thursday
+  // Ex: if first of Nov. is Thursday (5), then add 21 days to get to fourth Thursday
+  const daysToAddMap = [25, 24, 23, 22, 21, 27, 26];
+  
+  // Calculate days to add
+  const daysToAdd = daysToAddMap[dayOfWeek];
+  
+  // Calculate Labor Day date
+  const thanksgivingDayDate = new Date(year, 10, 1 + daysToAdd);
+  return thanksgivingDayDate;
 }
 
 
@@ -839,6 +875,18 @@ function showElectionDayTooltip(event) {
 function showVeteransDayTooltip(event) {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.innerHTML = "Veterans Day Observed";
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/**************************************
+** Display Thanksgiving Day Date in Nov
+**************************************/
+function showThanksgivingDayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = "Thanksgiving Day";
   tooltip.style.display = 'block';
   tooltip.style.left = `${event.pageX + 10}px`;
   tooltip.style.top = `${event.pageY - 20}px`;
