@@ -32,7 +32,7 @@ const holidays = {
       { 31: "Hallowen"},
   ], 
   10: [ //November
-        { 11: "Veterans Day" }, //Vet Day is still 11th but time offchanges when the 11th falls on Saturday/Sunday (If Sat, time off is on Friday (the day before). If Sunday, time off falls on Monday (the day after).
+        { 11: "Veterans Day"},
         { 28: "Thanksgiving Day" }, //changes every year 
         { 29: "Black Friday"}, //changes every year
   ],
@@ -113,6 +113,7 @@ function createCalendarTable(year, month, calendarType) {
   const laborDayDate = getLaborDayDate(year);
   const columbusDayDate = getColumbusDayDate(year);
   const electionDayDate =  getElectionDayDate(year);
+  const veteransDayDate = getVeteransDayObserveDate(year);
 
   const table = document.createElement('table');
   table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
@@ -338,6 +339,22 @@ function createCalendarTable(year, month, calendarType) {
           cell.addEventListener('mouseout', hideHolidayTooltip);
         }
 
+        /**********************************************
+        * Check if the current day is Veterans Day
+        ***********************************************/
+        if (
+          year === veteransDayDate.getFullYear() &&
+          month === veteransDayDate.getMonth() &&
+          dayCounter === veteransDayDate.getDate()
+        ) {
+          // Add css style class 'holidays-observances-css' to cell
+          cell.classList.add('holidays-observances-css');
+
+          // when mouse is over cell, display 'Veterans Day'. If mouse not over, hide
+          cell.addEventListener('mouseover', showVeteransDayTooltip);
+          cell.addEventListener('mouseout', hideHolidayTooltip);
+        }
+
         //retrieves the array of holidays for the current month from the holidays object.
         const monthHolidays = holidays[month];
 
@@ -374,6 +391,29 @@ function createCalendarTable(year, month, calendarType) {
 
   table.appendChild(tbody);
   return table;
+}
+
+
+/************************************
+** Function to get Veteran's Day Date
+************************************/
+function getVeteransDayObserveDate(year) {
+  const veteransDayDate = new Date(year, 10, 11); // Veterans Day is always on November 11th
+  const dayOfWeek = veteransDayDate.getDay(); //if dayOfWeek = 0, then it's Sunday. If = 1, then it's Monday, etc...
+
+  let veteransDayObservedDate;
+  if(dayOfWeek === 6) { //if Saturday
+    veteransDayObservedDate = new Date(year, 10, 10); 
+    return veteransDayObservedDate; //return Friday, November 10th
+  }
+  else if (dayOfWeek === 0) { //if Sunday
+    veteransDayObservedDate = new Date(year, 10, 12); 
+    return veteransDayObservedDate //return Monday, November 13th
+  }
+  else {
+    veteransDayObservedDate = new Date(year, 10, 11);
+    return veteransDayObservedDate; //return November 11th. Could be anyday, Monday through Friday, depending on the year
+  }
 }
 
 
@@ -787,6 +827,18 @@ function showColumbusDayTooltip(event) {
 function showElectionDayTooltip(event) {
   const tooltip = document.getElementById('holiday-tooltip');
   tooltip.innerHTML = "Election Day";
+  tooltip.style.display = 'block';
+  tooltip.style.left = `${event.pageX + 10}px`;
+  tooltip.style.top = `${event.pageY - 20}px`;
+}
+
+
+/**********************************
+** Display Election Day Date in Nov
+**********************************/
+function showVeteransDayTooltip(event) {
+  const tooltip = document.getElementById('holiday-tooltip');
+  tooltip.innerHTML = "Veterans Day Observed";
   tooltip.style.display = 'block';
   tooltip.style.left = `${event.pageX + 10}px`;
   tooltip.style.top = `${event.pageY - 20}px`;
