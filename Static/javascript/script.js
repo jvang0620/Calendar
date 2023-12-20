@@ -43,47 +43,59 @@ const holidays = {
 };
 
 
-/*******************
-  Generate calendars
-*******************/
+/**
+ * Generates and displays three calendars (current, previous, and next month) in the specified year and month.
+ * 
+ * @param {*} year - The year for which to generate the calendars.
+ * @param {*} month - The month for which to generate the calendars (0-indexed, January is 0, December is 11).
+ */
 function generateCalendar(year, month) {
+  // Get the calendar container element by its ID
   const calendarContainer = document.getElementById('calendar-container');
-  calendarContainer.innerHTML = ''; // Clear the container
+  
+  // Clear the container content
+  calendarContainer.innerHTML = '';
 
-  // Create the current month calendar
+  // Create and append the current month calendar
   const currentMonthContainer = createCalendarContainer(year, month, 'current-month');
   currentMonthContainer.appendChild(createCalendarTable(year, month));
   calendarContainer.appendChild(currentMonthContainer);
 
-  // Create the previous month calendar
+  // Create and append the previous month calendar
   const previousMonthContainer = createCalendarContainer(year, month - 1);
   previousMonthContainer.appendChild(createCalendarTable(year, (month - 1 + 12) % 12, 'prev-month'));
   calendarContainer.appendChild(previousMonthContainer);
 
-  // Create the next month calendar
+  // Create and append the next month calendar
   const nextMonthContainer = createCalendarContainer(year, month + 1);
   nextMonthContainer.appendChild(createCalendarTable(year, (month + 1) % 12, 'next-month'));
   calendarContainer.appendChild(nextMonthContainer);
 }
 
 
-/******************************
-  Create the calendar container
-******************************/
+/**
+ * Creates the calendar container element based on the provided year, month, and calendar type.
+ * 
+ * @param {*} year - The year of the calendar.
+ * @param {*} month - The month of the calendar.
+ * @param {*} calendarType - The type of calendar (current, previous, or next month).
+ * @returns {HTMLElement} - The created calendar container element.
+ */
 function createCalendarContainer(year, month, calendarType) {
+  // Create a container div element
   const container = document.createElement('div');
   container.classList.add('calendar-container');
   
+  // Add the specified calendar type class if provided
   if (calendarType) {
     container.classList.add(calendarType);
   }
 
-  //if not current-month
+  // If not the current month, display the month and year in standard font-size
   if (calendarType !== "current-month") {
-    //keep h3 at standard font-size
     container.innerHTML = `<h3>${new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>`;
   } else {
-    //make h3 font-size xx-large
+    // If the current month, display the month and year with a larger font-size
     container.innerHTML = `<h3 id="calendarContainerH3">${new Date(year, month).toLocaleString('default', { month: 'long', year: 'numeric' })}</h3>`;
   }
 
@@ -94,9 +106,9 @@ function createCalendarContainer(year, month, calendarType) {
  * Funtion applies holiday-related styling and behavior to calendar cell if the day
  * being processed corresponds to a holiday in the provided array of holidays
  * for the current month
- * @param {*} cell 
- * @param {*} dayCounter 
- * @param {*} monthHolidays 
+ * @param {*} cell - The calendar cell element.
+ * @param {*} dayCounter - The day of the month being processed.
+ * @param {*} monthHolidays - Array of holidays for the current month.
  */
 function applyHolidays(cell, dayCounter, monthHolidays) {
   // checks if there are any holidays for the current month. If there are, it enters the block of code
@@ -118,14 +130,15 @@ function applyHolidays(cell, dayCounter, monthHolidays) {
 }
 
 /**
- * Function highlights the current day in the calendar cell, providing interactive behavior
+ * Highlights the current day in the calendar cell, providing interactive behavior
  * such as showing a tooltip when the mouse is over the highlighted cell.
- * @param {*} cell 
- * @param {*} year 
- * @param {*} month 
- * @param {*} dayCounter 
- * @param {*} currentDate 
- * @param {*} currentDay 
+ * 
+ * @param {*} cell - The calendar cell element.
+ * @param {*} year - The year of the calendar.
+ * @param {*} month - The month of the calendar (0-indexed).
+ * @param {*} dayCounter - The day of the month being processed.
+ * @param {*} currentDate - The current date according to the system's date.
+ * @param {*} currentDay - The current day of the month.
  */
 function highlightCurrentDay(cell, year, month, dayCounter, currentDate, currentDay) {
   // checks if the current day being processed is the current day according to the system's date
@@ -137,14 +150,16 @@ function highlightCurrentDay(cell, year, month, dayCounter, currentDate, current
 }
 
 /**
+ * Checks if the current day corresponds to a specific holiday date and applies
+ * the specified CSS class and tooltip functionality to the given calendar cell
  * 
- * @param {*} cell 
- * @param {*} year 
- * @param {*} month 
- * @param {*} dayCounter 
- * @param {*} date 
- * @param {*} cssClass 
- * @param {*} tooltipFunction 
+ * @param {*} cell - The calendar cell element.
+ * @param {*} year - The year of the calendar.
+ * @param {*} month - The month of the calendar (0-indexed).
+ * @param {*} dayCounter - The day of the month being processed.
+ * @param {*} date - The date of the holiday.
+ * @param {*} cssClass - The CSS class to be added to the cell for the holiday.
+ * @param {*} tooltipFunction - The tooltip function to be triggered on mouseover.
  */
 function checkAndAddHoliday(cell, year, month, dayCounter, date, cssClass, tooltipFunction) {
   if (
@@ -186,40 +201,40 @@ function createCalendarTable(year, month, calendarType) {
   const veteransDayDate = getVeteransDayObserveDate(year);
   const thanksgivingDayDate = getThanksgivingDayDate(year);
 
-  const table = document.createElement('table');
-  table.classList.add(calendarType); // Add a class to differentiate current, previous, and next month tables
-  const thead = document.createElement('thead');
-  const tbody = document.createElement('tbody');
+  //set up basic structure for the calendar table
+  const table = document.createElement('table');  //create a new HTML table. Main container for the calendar
+  table.classList.add(calendarType);  //Add a class to differentiate current, previous, and next month tables
+  const thead = document.createElement('thead');  //create header section of the table. Will contain days of week (Sun, Mon, Tues...)
+  const tbody = document.createElement('tbody');  //create table body element (body section of the table). Will contain actualy days of the month
 
   // Create header row
-  const headerRow = document.createElement('tr');
+  const headerRow = document.createElement('tr'); //creates a new HTML 'tr' (table row) element, which will serve as the header row for the calendar table
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-  daysOfWeek.forEach(day => {
-    const th = document.createElement('th');
-    th.textContent = day;
-    headerRow.appendChild(th);
+  daysOfWeek.forEach(day => { //loop through daysOfWeek array
+    const th = document.createElement('th'); //for each day of the week, a new 'th' element is created
+    th.textContent = day; //the text content of the 'th' element is set to the current day of the week
+    headerRow.appendChild(th); //'th' is added to the headerRow
   });
 
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
+  thead.appendChild(headerRow); //after populating the 'headerRow' above with day names, it is added to the 'thead' element. 'thead' is the header section of the calendar table
+  table.appendChild(thead); //finally, the thead (with the populated header row) is appended to the main table element
 
   // Create days
   let dayCounter = 1;
-  for (let i = 0; i < 6; i++) {
-    const row = document.createElement('tr');
+  for (let i = 0; i < 6; i++) { //outer loop create rows (weeks) in the calendar. It iterates up to 6 times, representing the maximum number of rows in a month
+    const row = document.createElement('tr'); //creates a new HTML 'tr' (table row) element for each week
   
-    for (let j = 0; j < 7; j++) {
-      const cell = document.createElement('td');
-      if (i === 0 && j < firstDayOfMonth) {
-        // Empty cells before the first day of the month
-        cell.textContent = '';
+    for (let j = 0; j < 7; j++) { //inner loop creates individual cells (days) within each row
+      const cell = document.createElement('td'); //creates a new HTML 'td' (table cell) element for each day
+      if (i === 0 && j < firstDayOfMonth) {  // hecks if the cell belongs to the previous month
+        cell.textContent = ''; // Empty cells before the first day of the month and sets the text content to an empty string
       } 
-      else if (dayCounter <= daysInMonth) {
-        cell.textContent = dayCounter;
+      else if (dayCounter <= daysInMonth) { //checks if the dayCounter is within the current month's range
+        cell.textContent = dayCounter; //sets the text content of the cell to the current day.
 
 
-        //check and add holidays
+        //calls checkAndAddHoliday function to check and add holiday-related styling and behavior based on various holidays
         checkAndAddHoliday(cell, year, month, dayCounter, easterDate, 'holidays-observances-css', showEasterTooltip);
         checkAndAddHoliday(cell, year, month, dayCounter, goodFridayDate, 'holidays-observances-css', showGoodFridayTooltip);
         checkAndAddHoliday(cell, year, month, dayCounter, mlkJrDayDate, 'holidays-observances-css', showMlkJrDayTooltip);
@@ -244,16 +259,20 @@ function createCalendarTable(year, month, calendarType) {
         //highlights the current day in the calendar cell
         highlightCurrentDay(cell, year, month, dayCounter, currentDate, currentDay);
         
+        //increment dayCounter
         dayCounter++;
       }
-      row.appendChild(cell);
+      //appends the cell to the current row
+      row.appendChild(cell); 
     }
-  
-    tbody.appendChild(row);
+    //appends the row to the tbody (body) of the calendar table.
+    tbody.appendChild(row); 
   }
+  //appends the tbody to the main table element
+  table.appendChild(tbody); 
 
-  table.appendChild(tbody);
-  return table;
+  //Returns the complete calendar table
+  return table; 
 }
 
 
