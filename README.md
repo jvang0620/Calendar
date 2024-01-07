@@ -10,6 +10,8 @@
 
 This project is a fun way for me to enhance my HTML, CSS, and JavaScript skills. Feel free to clone and use the code, adding any features you'd like. The program will be an ongoing project, and I'll continue to incorporate new elements over time.
 
+Check out the Application [here](https://webpages.charlotte.edu/jvang29/JavaScript-Calendar/index.html).
+
 <br>
 
 ```bash
