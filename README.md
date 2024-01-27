@@ -1,24 +1,32 @@
-<h1 align="center">A JavaScript Calendar</h1>
-
+<div style="text-align: center;">
+    <h1>JavaScript Calendar</h1>
+</div>
 <br>
 
-<div align="center">
-    <img src="./Static/images/December-2023.PNG" alt="Screenshot of Calendar" width="800">
+<div style="text-align: center;">
+    <img src="./Static/images/January-2024.jpg" alt="Screenshot of Calendar" width="800">
 </div>
 
 <br>
 
-This project is a fun way for me to enhance my HTML, CSS, and JavaScript skills. Feel free to clone and use the code, adding any features you'd like. The program will be an ongoing project, and I'll continue to incorporate new elements over time.
+#### Overview:
 
-Check out the Application [here](https://webpages.charlotte.edu/jvang29/JavaScript-Calendar/index.html).
+Explore the Interactive JavaScript Calendar, a dynamic and engaging project. This calendar not only dynamically adjusts to the current month and year but also highlights holidays and observances, making it both functional and visually appealing. Discover the convenience of tooltips that provide additional information when you hover over highlighted dates.
 
-<br>
+The program will be an ongoing project, and I'll continue to incorporate new elements over time.
 
-```bash
-git clone https://github.com/jvang0620/JavaScript-Calendar
-```
+#### Try it Out:
 
-Add extension "Live Server" if you havn't:
+Experience the calendar in action by visiting the live demo [here](https://webpages.charlotte.edu/jvang29/JavaScript-Calendar/index.html).
+
+#### Getting Started:
+
+1. Clone the repository to your local machine one of the following:
+
+   HTTPS: <pre><code>git clone https://github.com/jvang0620/Calendar</code></pre>
+   SSH: <pre><code>git clone https://github.com/jvang0620/Calendar</code></pre>
+
+2. Add extension "Live Server" if you havn't:
 
 <div align="center">
     <img src="./Static/images/Live-Server-Pic.PNG" alt="Screenshot of Live Server Extension" width="600">
@@ -26,8 +34,6 @@ Add extension "Live Server" if you havn't:
 
 <br>
 
-Next, right-click anywhere in the HTML file and select "Open with Live Server", and the app will display on your local machine.
+3. Next, right-click anywhere in the HTML file and select "Open with Live Server", and the app will display on your local machine.
 
-You're all set.
-
-Happy coding!!!:)
+You're all set. Happy coding!!!:)
