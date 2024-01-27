@@ -19,6 +19,12 @@ The program will be an ongoing project, and I'll continue to incorporate new ele
 
 Experience the calendar in action by visiting the live demo [here](https://webpages.charlotte.edu/jvang29/JavaScript-Calendar/index.html).
 
+#### Developed Using:
+
+![HTML](https://img.shields.io/badge/-HTML-orange?style=for-the-badge&logo=html5)
+![CSS](https://img.shields.io/badge/-CSS-blue?style=for-the-badge&logo=css3)
+![JavaScript](https://img.shields.io/badge/-JavaScript-yellow?style=for-the-badge&logo=javascript)
+
 #### Getting Started:
 
 1. Clone the repository to your local machine one of the following:
@@ -31,8 +37,6 @@ Experience the calendar in action by visiting the live demo [here](https://webpa
 <div align="center">
     <img src="./Static/images/Live-Server-Pic.PNG" alt="Screenshot of Live Server Extension" width="600">
 </div>
-
-<br>
 
 3. Next, right-click anywhere in the HTML file and select "Open with Live Server", and the app will display on your local machine.
 
